@@ -1781,16 +1781,33 @@
 
   /* ============================================================
      LENIS — smooth scrolling
+     (guarded: if the CDN script fails to load/blocked, fall back to
+     native scrolling instead of throwing and killing the whole app)
      ============================================================ */
-  const lenis = new Lenis({
-    duration: 1.1,
-    smoothWheel: true,
-  });
-  function lenisRaf(time){
-    lenis.raf(time);
-    requestAnimationFrame(lenisRaf);
+  let lenis = null;
+  if (typeof Lenis !== 'undefined') {
+    try {
+      lenis = new Lenis({
+        duration: 1.1,
+        smoothWheel: true,
+      });
+      function lenisRaf(time){
+        lenis.raf(time);
+        requestAnimationFrame(lenisRaf);
+      }
+      requestAnimationFrame(lenisRaf);
+    } catch (e) {
+      console.warn('Lenis failed to initialize, falling back to native scroll.', e);
+      lenis = null;
+    }
+  } else {
+    console.warn('Lenis library did not load — using native scroll.');
   }
-  requestAnimationFrame(lenisRaf);
+  // Safe no-op stand-ins so every later lenis.stop()/lenis.start() call
+  // still works even when Lenis never initialized.
+  if (!lenis) {
+    lenis = { stop(){}, start(){}, raf(){} };
+  }
 
   /* ============================================================
      THEME ENGINE — auto-follow OS preference with manual override
