@@ -433,8 +433,9 @@
     .cf-toggle-btn svg{flex:0 0 auto;}
     .cf-toggle-btn.active{background:var(--card);color:var(--primary);box-shadow:0 4px 14px var(--primary-glow);}
     .cf-toggle-btn:not(.active):hover{color:var(--text);}
-    .cf-panel{display:none;}
+    .cf-panel{display:none;opacity:0;transform:translateY(8px);transition:opacity .28s cubic-bezier(.4,0,.2,1),transform .28s cubic-bezier(.4,0,.2,1);}
     .cf-panel.show{display:block;}
+    .cf-panel.show.cf-panel-in{opacity:1;transform:translateY(0);}
     .cf-section-label{font-size:12px;font-weight:700;color:var(--muted);margin:0 0 12px;}
 
     .cf-topic-field{position:relative;margin-bottom:22px;}
@@ -3126,8 +3127,12 @@
     const messageInput = document.getElementById('cfMessage');
 
     let cfMode = 'contact';
+    let cfSwitching = false;
 
     function setCfMode(next){
+      if(next === cfMode || cfSwitching) return;
+      cfSwitching = true;
+
       cfMode = next;
       const isContact = cfMode === 'contact';
 
@@ -3135,9 +3140,6 @@
       tabRate.classList.toggle('active', !isContact);
       tabContact.setAttribute('aria-selected', isContact);
       tabRate.setAttribute('aria-selected', !isContact);
-
-      panelContact.classList.toggle('show', isContact);
-      panelRate.classList.toggle('show', !isContact);
 
       nameInput.required = isContact;
       emailInput.required = isContact;
@@ -3148,7 +3150,26 @@
 
       ratingError.style.display = 'none';
       reviewFields.classList.remove('invalid');
+
+      const outgoing = isContact ? panelRate : panelContact;
+      const incoming = isContact ? panelContact : panelRate;
+
+      // Fade the current panel out first.
+      outgoing.classList.remove('cf-panel-in');
+
+      setTimeout(() => {
+        outgoing.classList.remove('show');
+        incoming.classList.add('show');
+        // Force reflow so the browser registers the starting state
+        // before the 'in' class kicks off the transition.
+        void incoming.offsetWidth;
+        incoming.classList.add('cf-panel-in');
+        cfSwitching = false;
+      }, 220);
     }
+
+    // Set the initial panel's visible state to match its 'show' class.
+    panelContact.classList.add('cf-panel-in');
 
     tabContact.addEventListener('click', () => setCfMode('contact'));
     tabRate.addEventListener('click', () => setCfMode('rate'));
