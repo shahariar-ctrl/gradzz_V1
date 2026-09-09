@@ -772,10 +772,12 @@
     }
     .year-pill.active{background:var(--grad1);color:#fff;border-color:transparent;}
     @media (max-width:767px){
-      .year-pills{flex-wrap:wrap;gap:6px;}
+      .year-pills{flex-wrap:wrap;gap:6px;--pc:4;}
       .year-pill{
-        flex:0 0 calc(25% - 4.5px);max-width:calc(25% - 4.5px);
-        padding:8px 6px;font-size:11px;text-align:center;white-space:nowrap;
+        flex:0 0 calc((100% - (var(--pc) - 1) * 6px) / var(--pc));
+        max-width:calc((100% - (var(--pc) - 1) * 6px) / var(--pc));
+        padding:8px 4px;font-size:11px;text-align:center;white-space:nowrap;
+        overflow:hidden;text-overflow:clip;
       }
       .grade-actions .btn{padding:10px 14px;font-size:12.5px;}
       .grade-actions .btn-icon{gap:6px;}
@@ -2942,6 +2944,7 @@
       return;
     }
     wrap.style.display = '';
+    wrap.style.setProperty('--pc', totalYears);
     let html = '';
     for(let y=1; y<=totalYears; y++){
       html += `<button class="year-pill${y===currentYear?' active':''}" onclick="setYear(${y})">${YEAR_NUM_LABEL[y]||y+'th'} ${unitWord(activeSyllabus)}</button>`;
