@@ -266,7 +266,7 @@
 
     /* ---- Floating glass bottom nav — mobile / large-mobile only ---- */
     .bottom-nav{
-      position:fixed;left:12.5px;right:12.5px;bottom:calc(12.5px + env(safe-area-inset-bottom));
+      position:fixed;left:15.6px;right:15.6px;bottom:calc(15.6px + env(safe-area-inset-bottom));
       z-index:80;display:flex;align-items:center;gap:5px;
       padding:7.5px 12.5px;border-radius:999px;
       background:rgba(248,250,252,.38);
@@ -274,6 +274,13 @@
       backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
       box-shadow:0 10px 34px rgba(15,23,42,.14),0 1px 0 rgba(255,255,255,.25) inset;
       max-width:575px;margin:0 auto;
+      transition:transform .32s cubic-bezier(.4,0,.2,1),opacity .32s ease;
+      will-change:transform;
+    }
+    .bottom-nav.bnav-hidden{
+      transform:translateY(calc(200% + 30px + env(safe-area-inset-bottom)));
+      opacity:0;
+      pointer-events:none;
     }
     [data-theme="dark"] .bottom-nav{
       background:rgba(18,24,36,.30);
@@ -2246,6 +2253,39 @@
     const box = document.querySelector('.header-search');
     if(box && box.classList.contains('open') && window.innerWidth < 768) clearGlobalSearch();
   }, {passive:true});
+
+  /* ============================================================
+     BOTTOM NAV — Facebook-style hide-on-scroll-down / show-on-scroll-up
+     ============================================================ */
+  (function(){
+    const bnav = document.getElementById('bottomNav');
+    if(!bnav) return;
+    let lastY = window.scrollY || window.pageYOffset || 0;
+    let ticking = false;
+    const REVEAL_THRESHOLD = 8;   // min px moved before reacting (avoids jitter)
+    const TOP_GUARD = 40;         // always show near the very top
+
+    function onScrollFrame(){
+      const y = window.scrollY || window.pageYOffset || 0;
+      const diff = y - lastY;
+      if(y <= TOP_GUARD){
+        bnav.classList.remove('bnav-hidden');
+      } else if(diff > REVEAL_THRESHOLD){
+        bnav.classList.add('bnav-hidden');       // scrolling down → hide
+        lastY = y;
+      } else if(diff < -REVEAL_THRESHOLD){
+        bnav.classList.remove('bnav-hidden');    // scrolling up → show
+        lastY = y;
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        requestAnimationFrame(onScrollFrame);
+        ticking = true;
+      }
+    }, {passive:true});
+  })();
   function globalSearch(val){
     const f = val.trim().toLowerCase();
     const results = document.getElementById('globalSearchResults');
