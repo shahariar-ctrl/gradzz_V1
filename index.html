@@ -408,6 +408,82 @@
     .social-btn.sb-twitter{background:linear-gradient(135deg,#0891B2 0%,#6366F1 100%);}
     .social-btn.sb-whatsapp{background:linear-gradient(135deg,#06B6D4 0%,#6366F1 100%);}
 
+    /* ===== Contact & Feedback form (themed to match the rest of the site) ===== */
+    .cf-card{padding:26px 24px;}
+    @media (max-width:479px){ .cf-card{padding:20px 16px;} }
+    .cf-toggle{display:flex;gap:4px;padding:4px;background:var(--bg2);border:1px solid var(--border);border-radius:999px;margin-bottom:22px;}
+    .cf-toggle-btn{flex:1;border:0;background:transparent;font:inherit;font-size:13.5px;font-weight:700;color:var(--muted);padding:10px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .18s ease,color .18s ease,box-shadow .18s ease;}
+    .cf-toggle-btn svg{flex:0 0 auto;}
+    .cf-toggle-btn.active{background:var(--card);color:var(--primary);box-shadow:0 4px 14px var(--primary-glow);}
+    .cf-toggle-btn:not(.active):hover{color:var(--text);}
+    .cf-panel{display:none;}
+    .cf-panel.show{display:block;}
+    .cf-section-label{font-size:12px;font-weight:700;color:var(--muted);margin:0 0 12px;}
+
+    .cf-topic-field{position:relative;margin-bottom:22px;}
+    .cf-topic-trigger{width:100%;display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;border:1.5px solid var(--border);background:var(--bg2);border-radius:14px;padding:12px 14px;font:inherit;font-size:14px;color:var(--text);transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;}
+    .cf-topic-trigger:focus,.cf-topic-trigger.open{border-color:var(--primary);background:var(--card);box-shadow:0 0 0 3px var(--primary-glow);outline:none;}
+    .cf-topic-trigger .cf-ti{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--primary-glow);color:var(--primary);display:flex;align-items:center;justify-content:center;}
+    .cf-topic-trigger .cf-tv{flex:1;color:var(--text);font-weight:600;}
+    .cf-topic-trigger .cf-tv.placeholder{color:var(--dim);font-weight:500;}
+    .cf-topic-trigger .cf-chev{flex:0 0 auto;color:var(--muted);transition:transform .18s ease;}
+    .cf-topic-trigger.open .cf-chev{transform:rotate(180deg);}
+
+    .cf-topic-menu{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;background:var(--card);border:1.5px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:6px;display:none;max-height:320px;overflow:auto;}
+    .cf-topic-menu.open{display:block;}
+    .cf-topic-opt{display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:10px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text);}
+    .cf-topic-opt:hover,.cf-topic-opt.active{background:var(--primary-glow);}
+    .cf-topic-opt.active{color:var(--primary);}
+    .cf-topic-opt .cf-ti{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--primary-glow);color:var(--primary);display:flex;align-items:center;justify-content:center;}
+    .cf-topic-opt.active .cf-ti{background:var(--primary);color:#fff;}
+
+    .cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .cf-full{grid-column:1/-1;}
+    .cf-field label{display:block;font-size:12.5px;font-weight:700;margin:0 0 7px;color:var(--muted);}
+    .cf-req{color:var(--accent-rose);font-weight:700;}
+    .cf-field input,.cf-field textarea{width:100%;border:1.5px solid var(--border);background:var(--bg2);border-radius:12px;padding:11px 13px;font:inherit;font-size:14px;color:var(--text);outline:none;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;}
+    @media (max-width:767px){ .cf-field input,.cf-field textarea{font-size:16px;} }
+    .cf-field textarea{min-height:110px;resize:vertical;}
+    .cf-field input::placeholder,.cf-field textarea::placeholder{color:var(--dim);}
+    .cf-field input:focus,.cf-field textarea:focus{border-color:var(--primary);background:var(--card);box-shadow:0 0 0 3px var(--primary-glow);}
+    .cf-hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5;}
+    .cf-conditional{display:none;}
+
+    .cf-rating-block{display:none;margin-top:18px;background:var(--primary-glow);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;text-align:center;}
+    .cf-rating-block.show{display:block;}
+    .cf-rating-block.invalid{border-color:var(--accent-rose);background:var(--fail-bg);}
+    .cf-rating-block .cf-rt{font-family:var(--disp);font-weight:600;font-size:14.5px;color:var(--text);margin:0 0 10px;}
+    .cf-stars{display:flex;gap:5px;align-items:center;justify-content:center;}
+    .cf-star{position:relative;border:0;background:transparent;padding:0;width:30px;height:30px;font-size:30px;line-height:30px;color:var(--border-hi);cursor:pointer;transition:transform .16s ease;}
+    .cf-star::before{content:"★";position:absolute;inset:0;color:var(--border-hi);}
+    .cf-star-fill{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;pointer-events:none;clip-path:inset(0 100% 0 0);transition:clip-path .28s cubic-bezier(.22,1,.36,1);}
+    .cf-star-fill::before{content:"★";position:absolute;left:0;top:0;width:30px;height:30px;line-height:30px;color:var(--accent-amber);}
+    .cf-star.full .cf-star-fill{clip-path:inset(0 0 0 0);}
+    .cf-star.half .cf-star-fill{clip-path:inset(0 50% 0 0);}
+    .cf-star:hover{transform:scale(1.1);}
+    .cf-hit{position:absolute;top:0;width:50%;height:100%;z-index:5;cursor:pointer;}
+    .cf-hit-left{left:0;}
+    .cf-hit-right{right:0;}
+    .cf-rating-text{font-size:12.5px;color:var(--muted);font-weight:650;margin-top:8px;}
+    .cf-rating-error{display:none;color:var(--accent-rose);font-size:12px;font-weight:650;margin-top:8px;}
+
+    .cf-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:26px;flex-wrap:wrap;}
+    .cf-lock-hint{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);}
+    .cf-lock-hint svg{flex:0 0 auto;color:var(--primary);}
+
+    .cf-submit-error{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--fail-bg);color:var(--fail-text);border:1px solid rgba(244,63,94,.3);font-weight:650;font-size:12.5px;}
+    .cf-submit-error.show{display:block;}
+    .cf-success{display:none;margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--pass-bg);color:var(--pass-text);border:1px solid rgba(16,185,129,.3);font-weight:650;font-size:13.5px;align-items:center;gap:9px;}
+    .cf-success.show{display:flex;}
+    .cf-success svg{flex:0 0 auto;}
+
+    @media (max-width:600px){
+      .cf-grid{grid-template-columns:1fr;}
+      .cf-full{grid-column:auto;}
+      .cf-actions{flex-direction:column;align-items:stretch;}
+      .cf-actions .btn{width:100%;justify-content:center;text-align:center;}
+    }
+
     .departments{padding:42px 0 20px;}
     .quick-search{
       display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;
@@ -955,6 +1031,7 @@
             <option value="honours">Honours</option>
             <option value="pass">Degree (Pass Course)</option>
             <option value="masters">Masters</option>
+            <option value="incampus">In-Campus Masters</option>
             <option value="prelim">Preliminary to Masters</option>
           </select>
         </div>
@@ -1098,6 +1175,129 @@
         <h3>Check the FAQ first</h3>
         <p>Quick question about grading, syllabuses, or how your data is stored? It might already be answered <a href="#" onclick="showView('faq');return false;" style="color:var(--primary);font-weight:700;">here</a>.</p>
       </div>
+    </div>
+
+    <h3 class="about-subhead">// send us a message</h3>
+    <div class="glass cf-card">
+      <form id="cfForm">
+        <div class="cf-toggle" role="tablist">
+          <button type="button" class="cf-toggle-btn active" id="cfTabContact" role="tab" aria-selected="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v14H5.2L4 19.5V4Z"/><path d="M8 9h8M8 12.5h5"/></svg>
+            Send a Message
+          </button>
+          <button type="button" class="cf-toggle-btn" id="cfTabRate" role="tab" aria-selected="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L12 3.5Z"/></svg>
+            Rate Your Experience
+          </button>
+        </div>
+
+        <div class="cf-panel show" id="cfPanelContact">
+          <div class="cf-section-label">What's this about?</div>
+          <div class="cf-topic-field">
+            <input type="hidden" id="cfType" value="">
+            <button type="button" class="cf-topic-trigger" id="cfTopicTrigger" aria-haspopup="listbox" aria-expanded="false">
+              <span class="cf-ti" id="cfTopicIcon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg></span>
+              <span class="cf-tv placeholder" id="cfTopicValueText">Select a topic</span>
+              <span class="cf-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="cf-topic-menu" id="cfTopicMenu" role="listbox">
+              <div class="cf-topic-opt" role="option" data-value="bug" data-label="Report a Bug">
+                <span class="cf-ti"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="8" height="12" rx="4"/><path d="M8 10H4M8 14H4M16 10h4M16 14h4M10 6V4M14 6V4"/></svg></span>
+                <span>Report a Bug</span>
+              </div>
+              <div class="cf-topic-opt" role="option" data-value="suggestion" data-label="Suggest an Idea">
+                <span class="cf-ti"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6v.5h5.4v-.5c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3Z"/></svg></span>
+                <span>Suggest an Idea</span>
+              </div>
+              <div class="cf-topic-opt" role="option" data-value="question" data-label="Ask a Question">
+                <span class="cf-ti"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 0 1 4.6 1.3c0 1.5-2.1 1.8-2.1 3.2"/><path d="M12 17.2v.1"/></svg></span>
+                <span>Ask a Question</span>
+              </div>
+              <div class="cf-topic-opt" role="option" data-value="problem" data-label="Report a Problem">
+                <span class="cf-ti"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17.2v.1"/></svg></span>
+                <span>Report a Problem</span>
+              </div>
+              <div class="cf-topic-opt" role="option" data-value="general" data-label="General Inquiry">
+                <span class="cf-ti"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 1 1-3.4-6.5L21 4l-1 3.8"/></svg></span>
+                <span>General Question</span>
+              </div>
+              <div class="cf-topic-opt" role="option" data-value="other" data-label="Other / Something Else">
+                <span class="cf-ti"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg></span>
+                <span>Something Else</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cf-grid">
+            <div class="cf-field"><label for="cfName">Your Name</label><input id="cfName" type="text" placeholder="Enter your name" required></div>
+            <div class="cf-field"><label for="cfEmail">Email Address</label><input id="cfEmail" type="email" placeholder="you@example.com" required></div>
+            <div class="cf-field cf-full"><label for="cfSubject">Subject</label><input id="cfSubject" type="text" placeholder="What is this about?" required></div>
+            <div class="cf-field cf-full"><label for="cfMessage">Message</label><textarea id="cfMessage" placeholder="Tell us more — the more detail, the more it helps us improve." required></textarea></div>
+            <div class="cf-field cf-full cf-conditional" id="cfBugFields">
+              <label for="cfPage">Page / Feature</label>
+              <input id="cfPage" type="text" placeholder="e.g. Honours department page, Result download">
+              <div class="cf-hint">Helps us find and fix it faster.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cf-panel" id="cfPanelRate">
+          <div class="cf-rating-block show" id="cfReviewFields">
+            <div class="cf-rt">How was your experience? <span class="cf-req">*</span></div>
+            <input type="hidden" id="cfRating" value="">
+            <div class="cf-stars" id="cfStars" aria-label="Rating from 0.5 to 5 stars">
+              <button class="cf-star" type="button" data-star="1" aria-label="Select 0.5 or 1 star">
+                <span class="cf-star-fill"></span>
+                <span class="cf-hit cf-hit-left" data-value="0.5"></span>
+                <span class="cf-hit cf-hit-right" data-value="1"></span>
+              </button>
+              <button class="cf-star" type="button" data-star="2" aria-label="Select 1.5 or 2 stars">
+                <span class="cf-star-fill"></span>
+                <span class="cf-hit cf-hit-left" data-value="1.5"></span>
+                <span class="cf-hit cf-hit-right" data-value="2"></span>
+              </button>
+              <button class="cf-star" type="button" data-star="3" aria-label="Select 2.5 or 3 stars">
+                <span class="cf-star-fill"></span>
+                <span class="cf-hit cf-hit-left" data-value="2.5"></span>
+                <span class="cf-hit cf-hit-right" data-value="3"></span>
+              </button>
+              <button class="cf-star" type="button" data-star="4" aria-label="Select 3.5 or 4 stars">
+                <span class="cf-star-fill"></span>
+                <span class="cf-hit cf-hit-left" data-value="3.5"></span>
+                <span class="cf-hit cf-hit-right" data-value="4"></span>
+              </button>
+              <button class="cf-star" type="button" data-star="5" aria-label="Select 4.5 or 5 stars">
+                <span class="cf-star-fill"></span>
+                <span class="cf-hit cf-hit-left" data-value="4.5"></span>
+                <span class="cf-hit cf-hit-right" data-value="5"></span>
+              </button>
+            </div>
+            <div class="cf-rating-text" id="cfRatingText">Tap a star to rate your experience</div>
+            <div class="cf-rating-error" id="cfRatingError">Please select a rating before submitting.</div>
+          </div>
+
+          <div class="cf-grid" style="margin-top:18px;">
+            <div class="cf-field"><label for="cfRateName">Your Name <span style="color:var(--muted);font-weight:600;">(optional)</span></label><input id="cfRateName" type="text" placeholder="Enter your name"></div>
+            <div class="cf-field"><label for="cfRateEmail">Email <span style="color:var(--muted);font-weight:600;">(optional)</span></label><input id="cfRateEmail" type="email" placeholder="you@example.com"></div>
+            <div class="cf-field cf-full"><label for="cfRateComment">Anything you'd like to add? <span style="color:var(--muted);font-weight:600;">(optional)</span></label><textarea id="cfRateComment" placeholder="Tell us what stood out — good or bad."></textarea></div>
+          </div>
+        </div>
+
+        <div class="cf-actions">
+          <div class="cf-lock-hint">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Used only to respond to your message.</span>
+          </div>
+          <button class="btn btn-grad" type="submit" id="cfSubmitBtn">
+            <span id="cfSubmitLabel">Send Message</span>
+          </button>
+        </div>
+        <div class="cf-submit-error" id="cfSubmitError">Something went wrong sending this — please try again in a moment.</div>
+        <div class="cf-success" id="cfSuccess">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Thanks — your feedback has been submitted.
+        </div>
+      </form>
     </div>
 
     <h3 class="about-subhead">// find us online</h3>
@@ -1363,7 +1563,7 @@
           <label>Student Type</label>
           <select id="siStudentType"><option value="">-- Select --</option><option>Regular</option><option>Irregular</option><option>Improvement</option><option>Private</option></select>
         </div>
-        <div class="si-field"><label>College Name</label><input type="text" id="siCollege" placeholder="e.g., Government College, Dhaka" oninput="this.value=this.value.replace(/[^A-Za-z0-9\s.,'-]/g,'')"></div>
+        <div class="si-field" id="siCollegeWrap"><label id="siCollegeLabel">College Name</label><input type="text" id="siCollege" placeholder="e.g., Government College, Dhaka" oninput="this.value=this.value.replace(/[^A-Za-z0-9\s.,'-]/g,'')"></div>
         <div class="si-field readonly"><label>Subject</label><input type="text" id="siSubject" readonly></div>
         <div class="si-field highlight"><label>Subject Result</label><input type="text" id="siResult" readonly></div>
         <div class="si-field readonly"><label id="siCgpaLabel">CGPA</label><input type="text" id="siCgpa" readonly></div>
@@ -1408,6 +1608,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.1.14/dist/lenis.css">
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
 <style id="grdSheetStyle">
   /* ============================================================
      RESULT SHEET v2 — "luxury" design, ported from the provided
@@ -1554,6 +1756,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script>
   const { jsPDF } = window.jspdf || {};
+
+  /* ============================================================
+     LENIS — smooth scrolling
+     ============================================================ */
+  const lenis = new Lenis({
+    duration: 1.1,
+    smoothWheel: true,
+  });
+  function lenisRaf(time){
+    lenis.raf(time);
+    requestAnimationFrame(lenisRaf);
+  }
+  requestAnimationFrame(lenisRaf);
+
   /* ============================================================
      THEME ENGINE — auto-follow OS preference with manual override
      ============================================================ */
@@ -1609,12 +1825,28 @@
 
   /* ---------------- data ---------------- */
   const GRADES = [
-    {g:'A+', pt:4.00, range:'80% Above'},{g:'A', pt:3.75, range:'75% to 79%'},
-    {g:'A-', pt:3.50, range:'70% to 74%'},{g:'B+', pt:3.25, range:'65% to 69%'},
-    {g:'B', pt:3.00, range:'60% to 64%'},{g:'B-', pt:2.75, range:'55% to 59%'},
-    {g:'C+', pt:2.50, range:'50% to 54%'},{g:'C', pt:2.25, range:'45% to 49%'},
-    {g:'D', pt:2.00, range:'40% to 44%'},{g:'F', pt:0.00, range:'Below 40%'},
+    {g:'A+', pt:4.00, range:'80% and Above',   rangeIncampus:'90% and Above'},
+    {g:'A',  pt:3.75, range:'75% to 79%',  rangeIncampus:'85% to 89%'},
+    {g:'A-', pt:3.50, range:'70% to 74%',  rangeIncampus:'80% to 84%'},
+    {g:'B+', pt:3.25, range:'65% to 69%',  rangeIncampus:'75% to 79%'},
+    {g:'B',  pt:3.00, range:'60% to 64%',  rangeIncampus:'70% to 74%'},
+    {g:'B-', pt:2.75, range:'55% to 59%',  rangeIncampus:'65% to 69%'},
+    {g:'C+', pt:2.50, range:'50% to 54%',  rangeIncampus:'60% to 64%'},
+    {g:'C',  pt:2.25, range:'45% to 49%',  rangeIncampus:'55% to 59%'},
+    {g:'D',  pt:2.00, range:'40% to 44%',  rangeIncampus:'50% to 54%'},
+    {g:'F',  pt:0.00, range:'Below 40%',   rangeIncampus:'Below 50%'},
   ];
+  // In-Campus Masters uses National University's own marks-range scale
+  // (e.g. 90 and Above for A+) instead of the standard one shown for
+  // every other program — grade points are identical either way.
+  function gradeRangeFor(g){ return activeSyllabus === 'incampus2013' ? g.rangeIncampus : g.range; }
+  // In-Campus Masters's official formula treats an 'F' grade's credits as
+  // never earned, so they drop out of the GPA/CGPA denominator entirely;
+  // every other program keeps an F course's credit in the denominator
+  // (contributing 0 grade points, which still drags the average down).
+  function creditCountsForEarned(grade){
+    return !(activeSyllabus === 'incampus2013' && grade.g === 'F');
+  }
 
   const CLASSES = [
     {range:'3.00 – 4.00', cls:'First Class'},
@@ -1647,6 +1879,9 @@
     'masters2013':{
       'Masters':['Accounting','Bangla','Botany','Economics','English','History','Mathematics','Physics','Sociology','Zoology (Soon)'],
     },
+    'incampus2013':{
+      'In-Campus Masters':['Accounting','Bangla','Economics','English','Physics (Soon)'],
+    },
     'prelim2013':{
       'Preliminary to Masters':['Accounting','Bangla','Botany','Economics','English','History','Mathematics','Physics','Sociology','Zoology (Soon)'],
     }
@@ -1659,6 +1894,7 @@
     {key:'pass2013', title:'Degree Pass', tag:'2013–2014 Syllabus', desc:'Explore Degree Pass programs and calculate your CGPA using the old syllabus.', icon:'<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>', active:true},
     {key:'masters2024', title:'Masters', tag:'2024–2025 Syllabus', desc:'Explore Masters programs and calculate your CGPA using the updated syllabus.', icon:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>', active:false},
     {key:'masters2013', title:'Masters', tag:'2013–2014 Syllabus', desc:'Explore Masters programs and calculate your CGPA using the current syllabus.', icon:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>', active:true},
+    {key:'incampus2013', title:'In-Campus Masters', tag:'2013–2014 Syllabus', desc:'Explore In-Campus Masters programs and calculate your CGPA using the current syllabus.', icon:'<svg viewBox="0 0 24 24"><path d="M4 21V7a1 1 0 0 1 1-1h4V3h6v3h4a1 1 0 0 1 1 1v14"/><path d="M4 21h16"/><path d="M9 21v-4h6v4"/><path d="M9 9h.01M9 13h.01M15 9h.01M15 13h.01"/></svg>', active:true},
     {key:'prelim2024', title:'Preliminary to Masters', tag:'2024–2025 Syllabus', desc:'Explore Preliminary to Masters programs and calculate your CGPA using the updated syllabus.', icon:'<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg>', active:false},
     {key:'prelim2013', title:'Preliminary to Masters', tag:'2013–2014 Syllabus', desc:'Explore Preliminary to Masters programs and calculate your CGPA using the current syllabus.', icon:'<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg>', active:true},
   ];
@@ -1667,6 +1903,7 @@
     '2024':4, '2013':4,
     'pass2024':3, 'pass2013':3,
     'masters2024':1, 'masters2013':1,
+    'incampus2013':3,
     'prelim2024':2, 'prelim2013':2,
   };
 
@@ -1675,9 +1912,21 @@
     '2024':'Bachelor Degree (Honours)', '2013':'Bachelor Degree (Honours)',
     'pass2024':'Bachelor Degree (Pass)', 'pass2013':'Bachelor Degree (Pass)',
     'masters2024':"Master's", 'masters2013':"Master's",
+    'incampus2013':"Master's (In-Campus)",
     'prelim2024':"Preliminary to Master's", 'prelim2013':"Preliminary to Master's",
   };
+  // Masters programs that run as a single, final-only result (no per-unit
+  // breakdown) — everything else (including In-Campus Masters, which runs
+  // across 3 semesters) uses the normal multi-unit flow below.
   const MASTERS_KEYS = ['masters2024','masters2013'];
+
+  // Some programs count their academic units in "Semester" rather than
+  // "Year" (currently just In-Campus Masters, which runs 3 semesters).
+  // Everything else defaults to "Year".
+  const PROGRAM_UNIT_WORD = { 'incampus2013':'Semester' };
+  function unitWord(key){ return PROGRAM_UNIT_WORD[key] || 'Year'; }
+  const UNIT_ORDINAL_WORD = {1:'First', 2:'Second', 3:'Third', 4:'Fourth'};
+  function unitFullLabel(key, n){ return `${UNIT_ORDINAL_WORD[n] || n+'th'} ${unitWord(key)}`; }
 
   // Builds the shared "Gradzz_<Program>[_<Nth>_Year]" prefix used for downloaded
   // PDF file names, e.g. "Gradzz_Honours_1st_Year" or "Gradzz_Masters_Final".
@@ -1687,7 +1936,7 @@
     const totalYears = PROGRAM_YEARS[activeSyllabus] || 1;
     const progLabel = isMasters ? 'Masters_Final' : (prog ? prog.title.replace(/\s+/g,'_') : 'Program');
     const yearPart = (includeYear && !isMasters && totalYears > 1)
-      ? `_${(YEAR_NUM_LABEL[currentYear] || currentYear+'th')}_Year`
+      ? `_${(YEAR_NUM_LABEL[currentYear] || currentYear+'th')}_${unitWord(activeSyllabus)}`
       : '';
     return `Gradzz_${progLabel}${yearPart}`;
   }
@@ -1716,7 +1965,7 @@
     } else if(mode === 'transcript'){
       middle = 'Examination';
     } else {
-      const yearOrdinal = totalYears > 1 ? (YEAR_NUM_LABEL[currentYear] || currentYear+'th') + ' Year ' : '';
+      const yearOrdinal = totalYears > 1 ? (YEAR_NUM_LABEL[currentYear] || currentYear+'th') + ' ' + unitWord(activeSyllabus) + ' ' : '';
       middle = `${yearOrdinal}Examination`;
     }
     return `${progPrefix} ${middle} — ${examYear}`;
@@ -1785,14 +2034,14 @@
       <button class="glass program-card ${accentClassFor(p.key)}" onclick="openProgram('${p.key}')">
         <div class="pc-icon">${p.icon}</div>
         <div class="pc-tag">${p.tag}</div>
-        <h3>${p.title}</h3>
+        <h3>${p.title} Program</h3>
         <p>${p.desc}</p>
         <span class="pc-arrow">Browse →</span>
       </button>`).join('');
   }
 
-  const SESSION_LABELS = {'2024':'2024–2025 Session','2013':'2013–2014 Session','pass2024':'2024–2025 Session','pass2013':'2013–2014 Session','masters2024':'2024–2025 Session','masters2013':'2013–2014 Session','prelim2024':'2024–2025 Session','prelim2013':'2013–2014 Session'};
-  const SESSION_SHORT = {'2024':'2024–2025','2013':'2013–2014','pass2024':'2024–2025','pass2013':'2013–2014','masters2024':'2024–2025','masters2013':'2013–2014','prelim2024':'2024–2025','prelim2013':'2013–2014'};
+  const SESSION_LABELS = {'2024':'2024–2025 Session','2013':'2013–2014 Session','pass2024':'2024–2025 Session','pass2013':'2013–2014 Session','masters2024':'2024–2025 Session','masters2013':'2013–2014 Session','incampus2013':'2013–2014 Session','prelim2024':'2024–2025 Session','prelim2013':'2013–2014 Session'};
+  const SESSION_SHORT = {'2024':'2024–2025','2013':'2013–2014','pass2024':'2024–2025','pass2013':'2013–2014','masters2024':'2024–2025','masters2013':'2013–2014','incampus2013':'2013–2014','prelim2024':'2024–2025','prelim2013':'2013–2014'};
   function glassPillClassFor(key){
     if(key.includes('2024')||key.includes('2013')) return 'ac-2024';
     return 'ac-pass';
@@ -1827,6 +2076,8 @@
     const prog = PROGRAMS.find(p=>p.key===key);
     updateDeptHeading(prog, key);
     renderDeptGroups();
+    renderGradingScale();
+    renderClassScale();
     showView('deptlist');
   }
 
@@ -1859,6 +2110,7 @@
     honours: [{key:'2024', label:'2024–2025'}, {key:'2013', label:'2013–2014'}],
     pass: [{key:'pass2024', label:'2024–2025'}, {key:'pass2013', label:'2013–2014'}],
     masters: [{key:'masters2013', label:'2013–2014'}],
+    incampus: [{key:'incampus2013', label:'2013–2014'}],
     prelim: [{key:'prelim2013', label:'2013–2014'}],
   };
   function qsProgramChange(){
@@ -1937,10 +2189,12 @@
   function openMobileMenu(){
     document.getElementById('mobileMenuOverlay').classList.add('open');
     document.body.style.overflow='hidden';
+    lenis.stop();
   }
   function closeMobileMenu(){
     document.getElementById('mobileMenuOverlay').classList.remove('open');
     document.body.style.overflow='';
+    lenis.start();
   }
   document.addEventListener('click', function(e){
     const box = document.querySelector('.header-search');
@@ -1989,10 +2243,12 @@
     document.getElementById('soonDeptCode').textContent = code;
     document.getElementById('soonModalOverlay').classList.add('open');
     document.body.style.overflow='hidden';
+    lenis.stop();
   }
   function closeSoonModal(){
     document.getElementById('soonModalOverlay').classList.remove('open');
     document.body.style.overflow='';
+    lenis.start();
   }
 
   let siMode = 'year';
@@ -2004,21 +2260,46 @@
       : "Review your information, then download this result as PDF";
     document.getElementById('siSubject').value = `${deptCodeNum(currentDept)} - ${currentDept}`;
     document.getElementById('siResult').value = 'In Progress';
+
+    // In-Campus Masters is always run through National University itself,
+    // so the "College Name" field becomes a locked "Institution" field
+    // instead of asking the student to type one in.
+    const isIncampus = activeSyllabus === 'incampus2013';
+    const collegeWrap = document.getElementById('siCollegeWrap');
+    const collegeLabel = document.getElementById('siCollegeLabel');
+    const collegeInput = document.getElementById('siCollege');
+    if(isIncampus){
+      collegeLabel.textContent = 'Institution';
+      collegeInput.value = 'National University';
+      collegeInput.readOnly = true;
+      collegeWrap.classList.add('readonly');
+    } else {
+      collegeLabel.textContent = 'College Name';
+      if(collegeInput.readOnly){ collegeInput.value = ''; }
+      collegeInput.readOnly = false;
+      collegeWrap.classList.remove('readonly');
+    }
     if(mode==='transcript'){
-      // Full transcript: show the overall CGPA across every year.
+      // Full transcript: show the overall CGPA across every year (Masters
+      // included — it's a single-year program, but still labeled CGPA).
       document.getElementById('siCgpaLabel').textContent = 'CGPA';
       document.getElementById('siCgpa').value = document.getElementById('sealCgpa').textContent;
     } else {
-      // Single year result: show only that year's GPA, not the cumulative CGPA.
-      document.getElementById('siCgpaLabel').textContent = 'GPA (' + (YEAR_LABELS[currentYear] || 'This Year') + ')';
+      // Single year result: show only that year's GPA, not the cumulative
+      // CGPA — except for Masters, which only has one year, so its result
+      // sheet is labeled CGPA too instead of "GPA (First Year)".
+      const isMastersMode = MASTERS_KEYS.includes(activeSyllabus);
+      document.getElementById('siCgpaLabel').textContent = isMastersMode ? 'CGPA' : ('GPA (' + unitFullLabel(activeSyllabus, currentYear) + ')');
       document.getElementById('siCgpa').value = yearStats(currentDept, currentYear).gpa.toFixed(2);
     }
     document.getElementById('studentInfoOverlay').classList.add('open');
     document.body.style.overflow='hidden';
+    lenis.stop();
   }
   function closeStudentInfoModal(){
     document.getElementById('studentInfoOverlay').classList.remove('open');
     document.body.style.overflow='';
+    lenis.start();
   }
   function clearFieldError(wrapId){
     document.getElementById(wrapId).classList.remove('field-error');
@@ -2072,12 +2353,24 @@
     const session = get('siSession') || '—';
     const studentType = get('siStudentType') || '—';
     const examYear = get('siYear') || '—';
+    // In-Campus Masters runs directly through National University, so its
+    // "College Name" row becomes two half-width cells — Institution and
+    // Program Type — instead of one free-text college name.
+    const isIncampus = activeSyllabus === 'incampus2013';
+    const collegeRowHTML = isIncampus
+      ? `<div class="rs2-record-item"><div class="rs2-field-label">Institution</div><div class="rs2-field-value">National University</div></div><div class="rs2-record-item"><div class="rs2-field-label">Program Type</div><div class="rs2-field-value">On-Campus</div></div>`
+      : `<div class="rs2-record-item rs2-full"><div class="rs2-field-label">College Name</div><div class="rs2-field-value">${college}</div></div>`;
 
     const prog = PROGRAMS.find(p=>p.key===activeSyllabus);
     const totalYears = PROGRAM_YEARS[activeSyllabus] || 1;
-    const yearOrdinal = totalYears > 1 ? (YEAR_NUM_LABEL[currentYear] || currentYear+'th') + ' Year ' : '';
+    const yearOrdinal = totalYears > 1 ? (YEAR_NUM_LABEL[currentYear] || currentYear+'th') + ' ' + unitWord(activeSyllabus) + ' ' : '';
     const headerLine = buildExamHeaderLine('year', examYear);
     const sectionTitle = `${prog ? prog.title : ''} ${yearOrdinal}Course wise Grade`.trim();
+    // Masters is a single-year program, so its result sheet's overall
+    // grade field is labeled CGPA (it's the whole program's result),
+    // unlike Honours/Degree Pass where each year's sheet shows GPA.
+    const isMastersProg = MASTERS_KEYS.includes(activeSyllabus);
+    const gpaFieldLabel = isMastersProg ? 'CGPA' : 'GPA';
 
     const subjects = SUBJECTS_BY_YEAR[currentYear] || [];
     let vals = {};
@@ -2090,7 +2383,7 @@
       const gradeFail = grade && grade.g === 'F';
       if(grade){
         gradedCount++;
-        creditsEarned += s.credit;
+        if(creditCountsForEarned(grade)) creditsEarned += s.credit;
         points += s.credit*grade.pt;
         if(gradeFail) hasFail = true;
       }
@@ -2144,19 +2437,19 @@
             <div class="rs2-record-item"><div class="rs2-field-label">Exam Roll</div><div class="rs2-field-value">${rollNo || '—'}</div></div>
             <div class="rs2-record-item"><div class="rs2-field-label">Reg. No.</div><div class="rs2-field-value">${regNo || '—'}</div></div>
             <div class="rs2-record-item rs2-full"><div class="rs2-field-label">Student Name</div><div class="rs2-field-value">${studentName}</div></div>
-            <div class="rs2-record-item rs2-full"><div class="rs2-field-label">College Name</div><div class="rs2-field-value">${college}</div></div>
+            ${collegeRowHTML}
             <div class="rs2-record-item"><div class="rs2-field-label">Session</div><div class="rs2-field-value">${session}</div></div>
             <div class="rs2-record-item"><div class="rs2-field-label">Student Type</div><div class="rs2-field-value">${studentType}</div></div>
             <div class="rs2-record-item rs2-full"><div class="rs2-field-label">Subject</div><div class="rs2-field-value">${subjectLine}</div></div>
             <div class="rs2-record-item${isFail?' rs2-fail':''}"><div class="rs2-field-label">Result Status</div><div class="rs2-field-value">${statusPillText}</div></div>
-            <div class="rs2-record-item rs2-highlight"><div class="rs2-field-label">GPA</div><div class="rs2-field-value">${yGpa.toFixed(2)} <small>/ 4.00</small></div></div>
+            <div class="rs2-record-item rs2-highlight"><div class="rs2-field-label">${gpaFieldLabel}</div><div class="rs2-field-value">${yGpa.toFixed(2)} <small>/ 4.00</small></div></div>
           </div>
         </section>
 
         <div class="rs2-metric-ribbon">
           <div class="rs2-metric-card"><span class="rs2-val">${String(subjects.length).padStart(2,'0')}</span><span class="rs2-lbl">Courses Evaluated</span></div>
           <div class="rs2-metric-card"><span class="rs2-val">${creditsEarned}</span><span class="rs2-lbl">Earned Credits</span></div>
-          <div class="rs2-metric-card"><span class="rs2-val">${yGpa.toFixed(2)}</span><span class="rs2-lbl">Grade Point Avg</span></div>
+          <div class="rs2-metric-card"><span class="rs2-val">${yGpa.toFixed(2)}</span><span class="rs2-lbl">${isMastersProg ? 'Cumulative GPA' : 'Grade Point Avg'}</span></div>
         </div>
 
         <div class="rs2-table-shell">
@@ -2267,11 +2560,24 @@
     const session = get('siSession') || '—';
     const studentType = get('siStudentType') || '—';
     const examYear = get('siYear') || '—';
+    // In-Campus Masters runs directly through National University, so its
+    // "College Name" row becomes two half-width cells — Institution and
+    // Program Type — instead of one free-text college name.
+    const isIncampus = activeSyllabus === 'incampus2013';
+    const collegeRowHTML = isIncampus
+      ? `<div class="rs2-record-item"><div class="rs2-field-label">Institution</div><div class="rs2-field-value">National University</div></div><div class="rs2-record-item"><div class="rs2-field-label">Program Type</div><div class="rs2-field-value">On-Campus</div></div>`
+      : `<div class="rs2-record-item rs2-full"><div class="rs2-field-label">College Name</div><div class="rs2-field-value">${college}</div></div>`;
 
     const prog = PROGRAMS.find(p=>p.key===activeSyllabus);
     const totalYears = PROGRAM_YEARS[activeSyllabus] || 1;
     const headerLine = buildExamHeaderLine('transcript', examYear);
-    const sectionTitle = `${prog ? prog.title : ''} Course wise Letter Grade`.trim();
+    // Masters is a single-year program, so its transcript uses the same
+    // 4-column (Code / Title / Credit / Letter Grade) layout — and matching
+    // "Course wise Grade" heading — as the per-year result sheet, instead
+    // of the multi-year Code(credit)/LG grid + "Course wise Letter Grade"
+    // heading used for Honours/Degree Pass programs.
+    const isMasters = MASTERS_KEYS.includes(activeSyllabus);
+    const sectionTitle = `${prog ? prog.title : ''} Course wise ${isMasters ? 'Grade' : 'Letter Grade'}`.trim();
 
     // Gather every year's subjects + saved grades, and roll them up into
     // one cumulative CGPA — same math as updateSummaryCard()/yearStats().
@@ -2291,18 +2597,18 @@
         totalPossibleCredits += s.credit;
         if(grade){
           gradedCount++;
-          creditsEarned += s.credit;
+          if(creditCountsForEarned(grade)) creditsEarned += s.credit;
           points += s.credit*grade.pt;
           if(grade.g === 'F') hasFailAny = true;
         }
-        return { code:s.code, credit:s.credit, grade: grade ? grade.g : null };
+        return { code:s.code, name:s.name, credit:s.credit, grade: grade ? grade.g : null };
       });
 
       const yGpa = creditsEarned ? points/creditsEarned : 0;
       if(creditsEarned > 0){ totalEarnedPoints += creditsEarned*yGpa; totalCreditsAll += creditsEarned; }
       if(subjects.length === 0 || gradedCount !== subjects.length) allGraded = false;
 
-      yearsData.push({ yr, label: YEAR_LABELS[yr] || ('Year ' + yr), rows, gpa: yGpa });
+      yearsData.push({ yr, label: unitFullLabel(activeSyllabus, yr), rows, gpa: yGpa });
     }
 
     const cumulativeGpa = totalCreditsAll > 0 ? totalEarnedPoints / totalCreditsAll : 0;
@@ -2316,38 +2622,86 @@
     const subjectLine = `(${deptCodeNum(currentDept)} - ${currentDept.toUpperCase()})`;
     const todayStr = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
 
-    // Build the consolidated course table: one code+LG column pair per
-    // year, rows padded to the tallest year so everything lines up.
-    const maxRows = yearsData.reduce((m,y)=>Math.max(m,y.rows.length), 0);
-    let bodyRows = '';
-    for(let r=0; r<maxRows; r++){
-      bodyRows += '<tr>';
-      yearsData.forEach((yd, idx)=>{
-        const sep = idx === yearsData.length-1 ? '' : ' rs2-year-sep';
-        const row = yd.rows[r];
-        if(row){
-          bodyRows += `<td class="rs2-tcode">${row.code}(${String(row.credit).padStart(2,'0')})</td><td class="rs2-tlg${sep}">${row.grade || '—'}</td>`;
-        } else {
-          bodyRows += `<td></td><td class="${sep.trim()}"></td>`;
-        }
-      });
-      bodyRows += '</tr>';
-    }
-    if(maxRows === 0){
-      bodyRows = `<tr><td colspan="${Math.max(2, totalYears*2)}" style="padding:16px;color:var(--rs2-ink-muted);">No subjects graded yet.</td></tr>`;
-    }
+    // Masters (single-year) transcripts render a plain 4-column table —
+    // Code / Title of Course / Credit / Letter Grade — identical to the
+    // per-year result sheet, since there's only ever one "year" of data.
+    // Honours/Degree Pass (multi-year) transcripts keep the consolidated
+    // grid: one Code(credit)+LG column pair per year, rows padded to the
+    // tallest year so everything lines up.
+    let tableMarkup;
+    if(isMasters){
+      const mRows = yearsData[0] ? yearsData[0].rows : [];
+      const courseRows = mRows.map(row=>{
+        const gradeFail = row.grade === 'F';
+        return `<tr>
+          <td class="rs2-code">${row.code}</td>
+          <td class="rs2-ttl">${(row.name || '').toUpperCase()}</td>
+          <td class="rs2-credit">${row.credit}</td>
+          <td><span class="rs2-grade-badge${gradeFail?' rs2-fail':''}">${row.grade || '—'}</span></td>
+        </tr>`;
+      }).join('') || `<tr><td colspan="4" style="padding:16px;color:var(--rs2-ink-muted);">No subjects graded yet.</td></tr>`;
 
-    // Same 17%:8% (code:LG) ratio as the original template, scaled so each
-    // year's pair of columns still divides the full table width evenly —
-    // this is what actually sets column widths (auto table layout reads
-    // the widths from these header cells), not a 50/50 split.
-    const pairWidthPct = 100 / yearsData.length;
-    const codeWidthPct = +(pairWidthPct * 0.80).toFixed(2);
-    const lgWidthPct = +(pairWidthPct * 0.20).toFixed(2);
+      tableMarkup = `<table class="rs2-course-table">
+            <thead>
+              <tr class="rs2-section-row"><th colspan="4">${sectionTitle}</th></tr>
+              <tr class="rs2-col-header-row">
+                <th style="width:14%;">Code</th>
+                <th class="rs2-title-col" style="width:56%;">Title of Course</th>
+                <th style="width:14%;">Credit</th>
+                <th style="width:16%;">Letter Grade</th>
+              </tr>
+            </thead>
+            <tbody>${courseRows}</tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="rs2-total-title">Total Result Summary</td>
+                <td><strong>${totalCreditsAll}</strong></td>
+                <td class="rs2-gpa-val">GPA ${cumulativeGpa.toFixed(2)}</td>
+              </tr>
+            </tfoot>
+          </table>`;
+    } else {
+      const maxRows = yearsData.reduce((m,y)=>Math.max(m,y.rows.length), 0);
+      let bodyRows = '';
+      for(let r=0; r<maxRows; r++){
+        bodyRows += '<tr>';
+        yearsData.forEach((yd, idx)=>{
+          const sep = idx === yearsData.length-1 ? '' : ' rs2-year-sep';
+          const row = yd.rows[r];
+          if(row){
+            bodyRows += `<td class="rs2-tcode">${row.code}(${String(row.credit).padStart(2,'0')})</td><td class="rs2-tlg${sep}">${row.grade || '—'}</td>`;
+          } else {
+            bodyRows += `<td></td><td class="${sep.trim()}"></td>`;
+          }
+        });
+        bodyRows += '</tr>';
+      }
+      if(maxRows === 0){
+        bodyRows = `<tr><td colspan="${Math.max(2, totalYears*2)}" style="padding:16px;color:var(--rs2-ink-muted);">No subjects graded yet.</td></tr>`;
+      }
 
-    const yearRowHTML = yearsData.map((yd, idx)=>`<th colspan="2"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>${yd.label}</th>`).join('');
-    const subColRowHTML = yearsData.map((yd, idx)=>`<th style="width:${codeWidthPct}%;">Course Code(credit)</th><th style="width:${lgWidthPct}%;"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>LG</th>`).join('');
-    const footRowHTML = yearsData.map((yd, idx)=>`<td colspan="2"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>GPA: ${yd.gpa.toFixed(2)}</td>`).join('');
+      // Same 17%:8% (code:LG) ratio as the original template, scaled so each
+      // year's pair of columns still divides the full table width evenly —
+      // this is what actually sets column widths (auto table layout reads
+      // the widths from these header cells), not a 50/50 split.
+      const pairWidthPct = 100 / yearsData.length;
+      const codeWidthPct = +(pairWidthPct * 0.80).toFixed(2);
+      const lgWidthPct = +(pairWidthPct * 0.20).toFixed(2);
+
+      const yearRowHTML = yearsData.map((yd, idx)=>`<th colspan="2"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>${yd.label}</th>`).join('');
+      const subColRowHTML = yearsData.map((yd, idx)=>`<th style="width:${codeWidthPct}%;">Course Code(credit)</th><th style="width:${lgWidthPct}%;"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>LG</th>`).join('');
+      const footRowHTML = yearsData.map((yd, idx)=>`<td colspan="2"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>GPA: ${yd.gpa.toFixed(2)}</td>`).join('');
+
+      tableMarkup = `<table class="rs2-transcript-table">
+            <thead>
+              <tr class="rs2-section-row"><th colspan="${Math.max(2, totalYears*2)}">${sectionTitle}</th></tr>
+              <tr class="rs2-year-row">${yearRowHTML}</tr>
+              <tr class="rs2-sub-col-row">${subColRowHTML}</tr>
+            </thead>
+            <tbody>${bodyRows}</tbody>
+            <tfoot><tr>${footRowHTML}</tr></tfoot>
+          </table>`;
+    }
 
     const sheetHTML = `
     <div class="rs2-doc">
@@ -2377,7 +2731,7 @@
             <div class="rs2-record-item"><div class="rs2-field-label">Exam Roll</div><div class="rs2-field-value">${rollNo || '—'}</div></div>
             <div class="rs2-record-item"><div class="rs2-field-label">Reg. No.</div><div class="rs2-field-value">${regNo || '—'}</div></div>
             <div class="rs2-record-item rs2-full"><div class="rs2-field-label">Student Name</div><div class="rs2-field-value">${studentName}</div></div>
-            <div class="rs2-record-item rs2-full"><div class="rs2-field-label">College Name</div><div class="rs2-field-value">${college}</div></div>
+            ${collegeRowHTML}
             <div class="rs2-record-item"><div class="rs2-field-label">Session</div><div class="rs2-field-value">${session}</div></div>
             <div class="rs2-record-item"><div class="rs2-field-label">Student Type</div><div class="rs2-field-value">${studentType}</div></div>
             <div class="rs2-record-item rs2-full"><div class="rs2-field-label">Subject</div><div class="rs2-field-value">${subjectLine}</div></div>
@@ -2387,15 +2741,7 @@
         </section>
 
         <div class="rs2-table-shell">
-          <table class="rs2-transcript-table">
-            <thead>
-              <tr class="rs2-section-row"><th colspan="${Math.max(2, totalYears*2)}">${sectionTitle}</th></tr>
-              <tr class="rs2-year-row">${yearRowHTML}</tr>
-              <tr class="rs2-sub-col-row">${subColRowHTML}</tr>
-            </thead>
-            <tbody>${bodyRows}</tbody>
-            <tfoot><tr>${footRowHTML}</tr></tfoot>
-          </table>
+          ${tableMarkup}
         </div>
       </div>
 
@@ -2526,7 +2872,7 @@
     wrap.style.display = '';
     let html = '';
     for(let y=1; y<=totalYears; y++){
-      html += `<button class="year-pill${y===currentYear?' active':''}" onclick="setYear(${y})">${YEAR_NUM_LABEL[y]||y+'th'} Year</button>`;
+      html += `<button class="year-pill${y===currentYear?' active':''}" onclick="setYear(${y})">${YEAR_NUM_LABEL[y]||y+'th'} ${unitWord(activeSyllabus)}</button>`;
     }
     wrap.innerHTML = html;
   }
@@ -2538,7 +2884,7 @@
     const totalYears = PROGRAM_YEARS[activeSyllabus] || 1;
     let html = '';
     for(let y=1; y<=totalYears; y++){
-      html += `<div class="rp-stat"><div class="rp-stat-n" id="statY${y}">0.00</div><div class="rp-stat-l">YEAR ${y}</div></div>`;
+      html += `<div class="rp-stat"><div class="rp-stat-n" id="statY${y}">0.00</div><div class="rp-stat-l">${unitWord(activeSyllabus).toUpperCase()} ${y}</div></div>`;
     }
     html += `<div class="rp-stat"><div class="rp-stat-n" id="statCredits">0</div><div class="rp-stat-l">CREDITS</div></div>`;
     wrap.innerHTML = html;
@@ -2565,7 +2911,7 @@
     const subjects = SUBJECTS_BY_YEAR[currentYear] || [];
     panel.innerHTML = `
       <div class="sc-head">
-        <span class="sc-head-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:1px"><defs><linearGradient id="gradBookIcon" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#06B6D4"/><stop offset="1" stop-color="#6366F1"/></linearGradient></defs><path d="M4 5.5C4 4.67 4.67 4 5.5 4H11a1 1 0 0 1 1 1v14a1 1 0 0 0-1-1H5.5A1.5 1.5 0 0 1 4 16.5v-11Z" stroke="url(#gradBookIcon)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 5.5c0-.83-.67-1.5-1.5-1.5H13a1 1 0 0 0-1 1v14a1 1 0 0 1 1-1h5.5a1.5 1.5 0 0 0 1.5-1.5v-11Z" stroke="url(#gradBookIcon)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> ${currentDept} — ${YEAR_LABELS[currentYear] || ''}</span>
+        <span class="sc-head-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;margin-top:1px"><defs><linearGradient id="gradBookIcon" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#06B6D4"/><stop offset="1" stop-color="#6366F1"/></linearGradient></defs><path d="M4 5.5C4 4.67 4.67 4 5.5 4H11a1 1 0 0 1 1 1v14a1 1 0 0 0-1-1H5.5A1.5 1.5 0 0 1 4 16.5v-11Z" stroke="url(#gradBookIcon)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 5.5c0-.83-.67-1.5-1.5-1.5H13a1 1 0 0 0-1 1v14a1 1 0 0 1 1-1h5.5a1.5 1.5 0 0 0 1.5-1.5v-11Z" stroke="url(#gradBookIcon)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> ${currentDept} — ${unitFullLabel(activeSyllabus, currentYear)}</span>
         <button class="reset-btn" onclick="resetGrades()"><span class="rico">↻</span>Reset</button>
       </div>
       <div class="table-scroll">
@@ -2582,7 +2928,7 @@
           ${GRADES.map(g=>`<option value="${g.g}">${g.g} (${g.pt.toFixed(2)})</option>`).join('')}
         </select></td>
         <td class="marks" id="marks-${i}">—</td>
-      </tr>`).join('') + `<tr class="total"><td></td><td class="paper">Year Total</td><td class="credit" id="totalCredits">0</td><td colspan="2" id="totalGpa">0.00</td></tr>`;
+      </tr>`).join('') + `<tr class="total"><td></td><td class="paper">${unitWord(activeSyllabus)} Total</td><td class="credit" id="totalCredits">0</td><td colspan="2" id="totalGpa">0.00</td></tr>`;
     loadGrades();
     recalc();
   }
@@ -2609,7 +2955,7 @@
     subjects.forEach((s,i)=>{
       const g = vals[i];
       const grade = GRADES.find(x=>x.g===g);
-      if(grade){ creditsEarned += s.credit; points += s.credit*grade.pt; }
+      if(grade){ if(creditCountsForEarned(grade)) creditsEarned += s.credit; points += s.credit*grade.pt; }
     });
     return { credits: creditsEarned, gpa: creditsEarned ? points/creditsEarned : 0 };
   }
@@ -2650,7 +2996,7 @@
       const i=+sel.dataset.idx, credit=(SUBJECTS_BY_YEAR[currentYear]||[])[i].credit;
       const grade = GRADES.find(g=>g.g===sel.value);
       const m = document.getElementById('marks-'+i);
-      if(grade){ creditsEarned+=credit; points+=credit*grade.pt; m.textContent=grade.range; }
+      if(grade){ if(creditCountsForEarned(grade)) creditsEarned+=credit; points+=credit*grade.pt; m.textContent=gradeRangeFor(grade); }
       else{ m.textContent='—'; }
     });
     const gpa = creditsEarned ? points/creditsEarned : 0;
@@ -2671,7 +3017,7 @@
     if(!body) return;
     body.innerHTML = GRADES.map(g=>`
       <tr>
-        <td>${g.range}</td>
+        <td>${gradeRangeFor(g)}</td>
         <td class="gs-letter">${g.g}</td>
         <td>${g.pt.toFixed(2)}</td>
       </tr>`).join('');
@@ -2689,6 +3035,208 @@
   renderFaq();
   renderGradingScale();
   renderClassScale();
+
+  /* ===== Contact & Feedback form ===== */
+  (function initContactForm(){
+    // Put your Google Apps Script Web App URL (connected to your Google
+    // Sheet) here after deploying it. Left blank for now — submissions
+    // will show a friendly error until this is filled in.
+    const CF_SHEET_ENDPOINT = ''; // (here put the link of google spreadsheet)
+
+    const typeInput = document.getElementById('cfType');
+    const topicTrigger = document.getElementById('cfTopicTrigger');
+    const topicMenu = document.getElementById('cfTopicMenu');
+    const topicValueText = document.getElementById('cfTopicValueText');
+    const topicIcon = document.getElementById('cfTopicIcon');
+    const topicOpts = [...document.querySelectorAll('#cfTopicMenu .cf-topic-opt')];
+    const bugFields = document.getElementById('cfBugFields');
+    const ratingInput = document.getElementById('cfRating');
+    const ratingText = document.getElementById('cfRatingText');
+    const ratingError = document.getElementById('cfRatingError');
+    const reviewFields = document.getElementById('cfReviewFields');
+    const form = document.getElementById('cfForm');
+    const success = document.getElementById('cfSuccess');
+
+    if(!form) return;
+
+    const tabContact = document.getElementById('cfTabContact');
+    const tabRate = document.getElementById('cfTabRate');
+    const panelContact = document.getElementById('cfPanelContact');
+    const panelRate = document.getElementById('cfPanelRate');
+    const submitLabel = document.getElementById('cfSubmitLabel');
+    const submitBtn = document.getElementById('cfSubmitBtn');
+    const submitError = document.getElementById('cfSubmitError');
+    const nameInput = document.getElementById('cfName');
+    const emailInput = document.getElementById('cfEmail');
+    const subjectInput = document.getElementById('cfSubject');
+    const messageInput = document.getElementById('cfMessage');
+
+    let cfMode = 'contact';
+
+    function setCfMode(next){
+      cfMode = next;
+      const isContact = cfMode === 'contact';
+
+      tabContact.classList.toggle('active', isContact);
+      tabRate.classList.toggle('active', !isContact);
+      tabContact.setAttribute('aria-selected', isContact);
+      tabRate.setAttribute('aria-selected', !isContact);
+
+      panelContact.classList.toggle('show', isContact);
+      panelRate.classList.toggle('show', !isContact);
+
+      nameInput.required = isContact;
+      emailInput.required = isContact;
+      subjectInput.required = isContact;
+      messageInput.required = isContact;
+
+      submitLabel.textContent = isContact ? 'Send Message' : 'Submit Rating';
+
+      ratingError.style.display = 'none';
+      reviewFields.classList.remove('invalid');
+    }
+
+    tabContact.addEventListener('click', () => setCfMode('contact'));
+    tabRate.addEventListener('click', () => setCfMode('rate'));
+
+    const ratingLabels = {1:'Very poor', 2:'Poor', 3:'Okay', 4:'Good', 5:'Excellent'};
+
+    function closeTopicMenu(){
+      topicMenu.classList.remove('open');
+      topicTrigger.classList.remove('open');
+      topicTrigger.setAttribute('aria-expanded', 'false');
+    }
+    function openTopicMenu(){
+      topicMenu.classList.add('open');
+      topicTrigger.classList.add('open');
+      topicTrigger.setAttribute('aria-expanded', 'true');
+    }
+    topicTrigger.addEventListener('click', e => {
+      e.stopPropagation();
+      topicMenu.classList.contains('open') ? closeTopicMenu() : openTopicMenu();
+    });
+    document.addEventListener('click', () => closeTopicMenu());
+
+    function updateBugFields(){
+      const isBug = typeInput.value === 'bug' || typeInput.value === 'problem';
+      bugFields.style.display = isBug ? 'block' : 'none';
+    }
+
+    topicOpts.forEach(opt => {
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        topicOpts.forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        typeInput.value = opt.dataset.value;
+        topicValueText.textContent = opt.dataset.label;
+        topicValueText.classList.remove('placeholder');
+        topicIcon.innerHTML = opt.querySelector('.cf-ti').innerHTML;
+        closeTopicMenu();
+        updateBugFields();
+      });
+    });
+
+    const ratingHits = [...document.querySelectorAll('#cfStars .cf-hit')];
+    const starButtons = [...document.querySelectorAll('#cfStars .cf-star')];
+
+    function setRating(value){
+      value = Number(value);
+      ratingInput.value = value;
+
+      starButtons.forEach(star => {
+        const n = Number(star.dataset.star);
+        star.classList.remove('full', 'half');
+        if(value >= n) star.classList.add('full');
+        else if(value === n - 0.5) star.classList.add('half');
+      });
+
+      ratingText.textContent = `${value}/5 — ${ratingLabels[Math.ceil(value)]}`;
+      ratingError.style.display = 'none';
+      reviewFields.classList.remove('invalid');
+    }
+
+    ratingHits.forEach(hit => {
+      hit.addEventListener('click', e => {
+        e.stopPropagation();
+        setRating(hit.dataset.value);
+      });
+    });
+
+    async function sendToSheet(data){
+      // Apps Script Web Apps don't return usable CORS headers to the
+      // browser, so we send with mode:'no-cors'. We can't read the
+      // response, but the row still gets written on the sheet's side.
+      await fetch(CF_SHEET_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'text/plain'}, // avoids a CORS preflight
+        body: JSON.stringify(data)
+      });
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      submitError.classList.remove('show');
+
+      let data;
+
+      if(cfMode === 'contact'){
+        if(!typeInput.value){
+          topicTrigger.focus();
+          topicTrigger.style.borderColor = 'var(--accent-rose)';
+          setTimeout(() => { topicTrigger.style.borderColor = ''; }, 1400);
+          return;
+        }
+
+        data = {
+          mode: 'contact',
+          type: typeInput.value,
+          name: nameInput.value,
+          email: emailInput.value,
+          subject: subjectInput.value,
+          message: messageInput.value,
+          page: document.getElementById('cfPage').value
+        };
+      } else {
+        if(!ratingInput.value){
+          ratingError.style.display = 'block';
+          reviewFields.classList.add('invalid');
+          reviewFields.scrollIntoView({behavior:'smooth', block:'center'});
+          return;
+        }
+
+        data = {
+          mode: 'rate',
+          rating: Number(ratingInput.value),
+          name: document.getElementById('cfRateName').value,
+          email: document.getElementById('cfRateEmail').value,
+          comment: document.getElementById('cfRateComment').value
+        };
+      }
+
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Sending…';
+
+      try{
+        if(!CF_SHEET_ENDPOINT){
+          throw new Error('Sheet endpoint not configured yet.');
+        }
+        await sendToSheet(data);
+        success.classList.add('show');
+        success.scrollIntoView({behavior:'smooth', block:'nearest'});
+        form.reset();
+        setCfMode(cfMode);
+      } catch(err){
+        console.error('Submission failed:', err);
+        submitError.classList.add('show');
+      } finally {
+        submitBtn.disabled = false;
+        submitLabel.textContent = cfMode === 'contact' ? 'Send Message' : 'Submit Rating';
+      }
+    });
+
+    setCfMode('contact');
+  })();
 </script>
 
 </body>
