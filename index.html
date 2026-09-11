@@ -1145,9 +1145,9 @@
           </select>
         </div>
         <div class="qs-field">
-          <label>Session <span class="req">*</span></label>
+          <label>Syllabus <span class="req">*</span></label>
           <select id="qsSession" onchange="qsSessionChange()" disabled>
-            <option value="">— Select Session —</option>
+            <option value="">— Select Syllabus —</option>
           </select>
         </div>
         <div class="qs-field">
@@ -2208,57 +2208,14 @@
       {code:'510220', name:'Digital Systems and VHDL Lab',        credit:1.5},
       {code:'510222', name:'Electrical & Electronic Circuit Lab', credit:1.5},
     ],
-    /* ------------------------------------------------------------------
-       2nd / 3rd / 4th year below use DEMO CSE subjects — placeholders
-       that only exist to demonstrate the full 8-semester structure.
-       Replace these with the real syllabus courses later.
-    ------------------------------------------------------------------ */
-    2: [
-      /* ---- 3rd Semester (demo) ---- */
-      {code:'520301', name:'Data Structures',                     credit:3.0},
-      {code:'520302', name:'Data Structures Lab',                 credit:1.5},
-      {code:'520303', name:'Object Oriented Programming',         credit:3.0},
-      {code:'520304', name:'Object Oriented Programming Lab',     credit:1.5},
-      {code:'520305', name:'Digital Logic Design',                credit:3.0},
-      {code:'520307', name:'Differential Equations and Complex Variables', credit:3.0},
-      /* ---- 4th Semester (demo) ---- */
-      {code:'520311', name:'Algorithms',                          credit:3.0},
-      {code:'520312', name:'Algorithms Lab',                      credit:1.5},
-      {code:'520313', name:'Database Management Systems',         credit:3.0},
-      {code:'520314', name:'Database Management Systems Lab',     credit:1.5},
-      {code:'520315', name:'Computer Architecture',               credit:3.0},
-      {code:'520317', name:'Probability and Statistics',          credit:3.0},
-    ],
-    3: [
-      /* ---- 5th Semester (demo) ---- */
-      {code:'530501', name:'Operating Systems',                   credit:3.0},
-      {code:'530502', name:'Operating Systems Lab',               credit:1.5},
-      {code:'530503', name:'Computer Networks',                   credit:3.0},
-      {code:'530504', name:'Computer Networks Lab',               credit:1.5},
-      {code:'530505', name:'Microprocessor and Interfacing',      credit:3.0},
-      {code:'530506', name:'Microprocessor and Interfacing Lab',  credit:1.5},
-      /* ---- 6th Semester (demo) ---- */
-      {code:'530511', name:'Software Engineering',                credit:3.0},
-      {code:'530512', name:'Software Engineering Lab',            credit:1.5},
-      {code:'530513', name:'Theory of Computation',               credit:3.0},
-      {code:'530515', name:'Compiler Design',                     credit:3.0},
-      {code:'530516', name:'Compiler Design Lab',                 credit:1.5},
-      {code:'530517', name:'Artificial Intelligence',             credit:3.0},
-    ],
-    4: [
-      /* ---- 7th Semester (demo) ---- */
-      {code:'540701', name:'Machine Learning',                    credit:3.0},
-      {code:'540702', name:'Machine Learning Lab',                credit:1.5},
-      {code:'540703', name:'Computer Graphics',                   credit:3.0},
-      {code:'540704', name:'Computer Graphics Lab',               credit:1.5},
-      {code:'540705', name:'Information Security',                credit:3.0},
-      {code:'540707', name:'Web Engineering',                     credit:3.0},
-      /* ---- 8th Semester (demo) ---- */
-      {code:'540711', name:'Final Year Project / Thesis',         credit:6.0},
-      {code:'540712', name:'Professional Ethics and Cyber Law',   credit:3.0},
-      {code:'540713', name:'Mobile Application Development',      credit:3.0},
-      {code:'540715', name:'Project Management and Entrepreneurship', credit:3.0},
-    ],
+    // Years 2, 3 and 4 will be filled in with the real per-department
+    // subject lists once the syllabus data is ready. Left as empty
+    // arrays for now so the year pills, semester structure and totals
+    // still render correctly — each page simply shows an empty course
+    // list with 0 credits / 0.00 GPA until populated.
+    2: [],
+    3: [],
+    4: [],
   };
 
   /* ============================================================
@@ -2290,7 +2247,13 @@
   // Which departments are rendered with the two-semester-per-year layout.
   function isSemesterDept(){ return currentDept === 'Computer Science' && HONOURS_KEYS.includes(activeSyllabus); }
   function semesterGroupsFor(year){
-    return isSemesterDept() ? (SEMESTER_GROUPS_BY_YEAR[year] || null) : null;
+    if(!isSemesterDept()) return null;
+    // Don't split an empty year into semester tables — there's nothing
+    // to show inside them, and the "1st/2nd Semester" headers would be
+    // misleading. Fall back to a single (empty) table instead.
+    const subs = SUBJECTS_BY_YEAR[year];
+    if(!subs || subs.length === 0) return null;
+    return SEMESTER_GROUPS_BY_YEAR[year] || null;
   }
 
   const YEAR_LABELS = {1:'First Year', 2:'Second Year', 3:'Third Year', 4:'Fourth Year'};
@@ -2406,7 +2369,7 @@
     const sessionSel = document.getElementById('qsSession');
     qsResetSubject();
     if(!prog){
-      sessionSel.innerHTML = '<option value="">— Select Session —</option>';
+      sessionSel.innerHTML = '<option value="">— Select Syllabus —</option>';
       sessionSel.disabled = true;
       return;
     }
@@ -2417,7 +2380,7 @@
       return;
     }
     sessionSel.disabled = false;
-    sessionSel.innerHTML = '<option value="">— Select Session —</option>' +
+    sessionSel.innerHTML = '<option value="">— Select Syllabus —</option>' +
       opts.map(o=>`<option value="${o.key}">${o.label}</option>`).join('');
   }
   function qsResetSubject(){
