@@ -339,13 +339,19 @@
     }
     .header-search input:focus{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-glow);}
     .global-search-results{
-      position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:60;
-      width:125%;max-width:calc(100vw - 24px);
+      position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-6px) scale(.98);
+      z-index:60;width:125%;max-width:calc(100vw - 24px);
       background:var(--surface-hi);border:1px solid var(--border);border-radius:14px;
       backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:var(--shadow);
       padding:8px;display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto;
+      overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;
+      transform-origin:top center;opacity:0;visibility:hidden;pointer-events:none;
+      transition:opacity .2s ease,transform .2s ease,visibility .2s;
     }
-    .global-search-results:empty{display:none;padding:0;border:none;box-shadow:none;}
+    .global-search-results.show{
+      opacity:1;visibility:visible;transform:translateX(-50%) translateY(0) scale(1);pointer-events:auto;
+    }
+    [data-theme="dark"] .global-search-results{background:rgba(13,18,29,.98);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);}
     .gsr-item{
       display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;
       border:1px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;text-align:left;width:100%;
@@ -520,7 +526,8 @@
 
     .csel-menu{
       position:fixed;z-index:500;background:var(--card);border:1px solid var(--border);
-      border-radius:12px;box-shadow:var(--shadow);padding:6px;max-height:280px;overflow:auto;
+      border-radius:12px;box-shadow:var(--shadow);padding:6px;max-height:280px;overflow-y:auto;
+      overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;
       transform-origin:top center;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);
       pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s;
     }
@@ -784,8 +791,8 @@
     }
     .faq-q .plus{font-family:var(--mono);color:var(--accent-rose);font-size:20px;transition:.2s;flex-shrink:0;margin-left:14px;}
     .faq-item.open .plus{transform:rotate(45deg);}
-    .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
-    .faq-item.open .faq-a{max-height:320px;}
+    .faq-a{max-height:0;opacity:0;overflow:hidden;transform:translateY(-4px);transition:max-height .3s ease,opacity .22s ease,transform .22s ease;}
+    .faq-item.open .faq-a{max-height:320px;opacity:1;transform:translateY(0);transition:max-height .5s ease,opacity .45s ease .1s,transform .45s ease .1s;}
     .faq-a p{color:var(--muted);font-size:13.5px;line-height:1.7;padding:0 4px 20px;margin:0;}
 
     footer.site{border-top:1px solid var(--border);padding:40px 0 26px;margin-top:30px;overflow-x:hidden;max-width:100vw;}
@@ -2479,7 +2486,9 @@
 
   function clearGlobalSearch(){
     document.getElementById('globalDeptSearch').value='';
-    document.getElementById('globalSearchResults').innerHTML='';
+    const gsr = document.getElementById('globalSearchResults');
+    gsr.innerHTML='';
+    gsr.classList.remove('show');
     const box = document.getElementById('headerSearch');
     if(box) box.classList.remove('open');
   }
@@ -2525,7 +2534,7 @@
   function globalSearch(val){
     const f = val.trim().toLowerCase();
     const results = document.getElementById('globalSearchResults');
-    if(!f){ results.innerHTML=''; return; }
+    if(!f){ results.innerHTML=''; results.classList.remove('show'); return; }
     let matches = [];
     PROGRAMS.filter(p=>p.active).forEach(p=>{
       const groups = DEPTS[p.key] || {};
@@ -2538,7 +2547,7 @@
         });
       });
     });
-    if(!matches.length){ results.innerHTML = `<div class="gsr-empty">no matches — try a different name</div>`; return; }
+    if(!matches.length){ results.innerHTML = `<div class="gsr-empty">no matches — try a different name</div>`; results.classList.add('show'); return; }
     results.innerHTML = matches.slice(0,8).map(m=>`
       <button class="gsr-item" onclick="jumpToDept('${m.program.key}','${m.dept.replace(/'/g,"\\'")}')">
         <span class="gsr-main">
@@ -2547,6 +2556,7 @@
         </span>
         <span class="gsr-pill ${glassPillClassFor(m.program.key)}">${m.program.title.toUpperCase().replace('PRELIMINARY','PRE')}</span>
       </button>`).join('');
+    results.classList.add('show');
   }
   function jumpToDept(progKey, deptName){
     activeSyllabus = progKey;
@@ -3162,13 +3172,18 @@
       const heading = (cat && cat !== lastCat) ? `<div class="faq-cat">${cat}</div>` : '';
       lastCat = cat;
       return `${heading}
-      <div class="faq-item glass" style="margin-bottom:10px;padding:0 18px;" onclick="toggleFaq(${i})" id="faq-${i}">
-        <button class="faq-q">${f[0]}<span class="plus">+</span></button>
+      <div class="faq-item glass" style="margin-bottom:10px;padding:0 18px;" onclick="openFaq(${i})" id="faq-${i}">
+        <button class="faq-q">${f[0]}<span class="plus" onclick="closeFaqIcon(event,${i})">+</span></button>
         <div class="faq-a"><p>${f[1]}</p></div>
       </div>`;
     }).join('');
   }
-  function toggleFaq(i){ document.getElementById('faq-'+i).classList.toggle('open'); }
+  function openFaq(i){ document.getElementById('faq-'+i).classList.add('open'); }
+  function closeFaqIcon(e,i){
+    e.stopPropagation();
+    const el = document.getElementById('faq-'+i);
+    el.classList.contains('open') ? el.classList.remove('open') : el.classList.add('open');
+  }
 
   /* --- i18n swap with innerHTML support for line breaks --- */
   function showView(id, pushState){
@@ -3824,7 +3839,19 @@
         e.stopPropagation();
         menu.classList.contains('open') ? closeMenu() : openMenu();
       });
-      window.addEventListener('scroll', () => { if(menu.classList.contains('open')) closeMenu(); }, true);
+      menu.addEventListener('click', e => e.stopPropagation());
+      menu.addEventListener('wheel', e => {
+        const atTop = menu.scrollTop <= 0;
+        const atBottom = menu.scrollTop + menu.clientHeight >= menu.scrollHeight - 1;
+        if((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) e.preventDefault();
+        e.stopPropagation();
+      }, { passive:false });
+      menu.addEventListener('touchmove', e => e.stopPropagation());
+      window.addEventListener('scroll', e => {
+        if(!menu.classList.contains('open')) return;
+        if(menu.contains(e.target)) return; // internal scroll of the menu itself — don't close
+        closeMenu();
+      }, true);
       window.addEventListener('resize', () => { if(menu.classList.contains('open')) place(); });
       document.addEventListener('click', closeMenu);
 
@@ -3895,6 +3922,18 @@
       });
     });
     mo.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['disabled'] });
+
+    // Header search results: keep scroll contained to the dropdown itself.
+    const gsrBox = document.getElementById('globalSearchResults');
+    if(gsrBox){
+      gsrBox.addEventListener('wheel', e => {
+        const atTop = gsrBox.scrollTop <= 0;
+        const atBottom = gsrBox.scrollTop + gsrBox.clientHeight >= gsrBox.scrollHeight - 1;
+        if((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) e.preventDefault();
+        e.stopPropagation();
+      }, { passive:false });
+      gsrBox.addEventListener('touchmove', e => e.stopPropagation());
+    }
 
     // Value assignments made directly in JS (e.g. qsReset, resetGrades) don't
     // fire DOM mutations, so refresh those spots explicitly.
