@@ -500,8 +500,54 @@
     .cf-topic-trigger .cf-chev{flex:0 0 auto;color:var(--muted);transition:transform .18s ease;}
     .cf-topic-trigger.open .cf-chev{transform:rotate(180deg);}
 
-    .cf-topic-menu{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;background:var(--card);border:1.5px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:6px;display:none;max-height:320px;overflow:auto;}
-    .cf-topic-menu.open{display:block;}
+    .cf-topic-menu{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;background:var(--card);border:1.5px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:6px;max-height:320px;overflow:auto;transform-origin:top center;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .2s ease,transform .2s ease,visibility .2s;}
+    [data-theme="dark"] .cf-topic-menu{background:rgba(13,18,29,.98);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);}
+
+    /* ===== Generic custom-select (replaces native <select> popups with a themed, animated menu) ===== */
+    .csel-native-hidden{position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+    .csel-wrap{position:relative;display:inline-block;width:100%;}
+    .csel-trigger{
+      width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;
+      font:inherit;text-align:left;cursor:pointer;color:var(--text);
+      transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+    }
+    .csel-trigger:focus{outline:none;}
+    .csel-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .csel-label.csel-placeholder{color:var(--dim);}
+    .csel-chev{flex:0 0 auto;display:flex;align-items:center;color:var(--muted);transition:transform .18s ease;}
+    .csel-trigger.open .csel-chev{transform:rotate(180deg);}
+    .csel-trigger.csel-disabled{cursor:not-allowed;opacity:.65;}
+
+    .csel-menu{
+      position:fixed;z-index:500;background:var(--card);border:1px solid var(--border);
+      border-radius:12px;box-shadow:var(--shadow);padding:6px;max-height:280px;overflow:auto;
+      transform-origin:top center;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);
+      pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s;
+    }
+    .csel-menu.open{opacity:1;visibility:visible;transform:translateY(0) scale(1);pointer-events:auto;}
+    [data-theme="dark"] .csel-menu{background:rgba(13,18,29,.98);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);}
+    .csel-opt{padding:9px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;}
+    .csel-opt:hover,.csel-opt.active{background:var(--primary-glow);}
+    .csel-opt.active{color:var(--primary);}
+    .csel-opt.disabled{opacity:.45;cursor:not-allowed;}
+
+    /* Trigger skin matching .qs-field / .si-field selects */
+    .csel-trigger-form{
+      padding:11px 14px;border-radius:12px;border:1px solid var(--border);
+      background-color:var(--card);font-size:13px;font-weight:500;
+    }
+    .csel-trigger-form:focus,.csel-trigger-form.open{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);}
+    .csel-trigger-form.csel-disabled{background-color:var(--bg2);color:var(--dim);}
+
+    /* Trigger skin matching select.grade-select */
+    .csel-trigger-grade{
+      padding:9px 10px;border-radius:10px;border:1px solid var(--border);
+      background:var(--card);font-family:var(--mono);font-size:14px;font-weight:700;
+    }
+    .csel-trigger-grade:focus,.csel-trigger-grade.open{border-color:var(--primary);}
+    @media (min-width:768px){ .csel-trigger-grade{font-size:14.5px;padding:10px 10px;} }
+    table.marksheet td.grade .csel-wrap{width:auto;min-width:96px;}
+    .cf-topic-menu.open{opacity:1;visibility:visible;transform:translateY(0) scale(1);pointer-events:auto;}
     .cf-topic-opt{display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:10px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text);}
     .cf-topic-opt:hover,.cf-topic-opt.active{background:var(--primary-glow);}
     .cf-topic-opt.active{color:var(--primary);}
@@ -1202,8 +1248,8 @@
     <div class="feat-grid">
       <div class="glass feat-card acc-i1">
           <div class="feat-icon i1"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/><path d="M22 10v6"/></svg></div>
-        <h3>4 programs</h3>
-        <p>Honours (BSc, BBA, BSS, BA), Degree Pass, Masters, and Preliminary to Masters — all in one place.</p>
+        <h3>5 programs</h3>
+        <p>Honours (BSc, BBA, BSS, BA), Degree Pass, Masters, In-Campus Masters, and Preliminary to Masters — all in one place.</p>
       </div>
       <div class="glass feat-card acc-i2">
           <div class="feat-icon i2"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
@@ -1710,7 +1756,7 @@
   <div class="wrap footer-grid">
     <div class="foot-brand">
       <div class="logo" onclick="showView('home')"><span class="dot"></span><span class="brand-text">Gradzz</span><span class="logo-dots"><span class="accent">.</span><span class="accent2">.</span></span></div>
-      <p>Grade-weighted. Auto-saved. The CGPA calculator National University actually deserved.</p>
+      <p>Grade-weighted. Auto-saved. The CGPA calculator National University students actually deserved.</p>
     </div>
     <div class="foot-links-row">
       <div class="foot-col">
@@ -2273,7 +2319,7 @@
     ['What\'s the National University grading scale?','Standard 4.00 scale: A+ (4.00) down to F (0.00), split across ten bands from 80% Above down to below 40%. It\'s built into every calculator here.','General'],
     ['Is Gradzz free to use?','Completely — no account, no subscription, no hidden paywall. It\'s a passion project built by students, for students.','General'],
     ['How accurate is this compared to my official National University result?','As accurate as the grade points and credits you enter. We use National University\'s official grading formula, so if your inputs match your marksheet, your CGPA will match too — but always treat your official National University result as final.','General'],
-    ['Which programs are covered?','BSc, BBA, BSS and BA Honours, the Degree Pass course, Masters, and Preliminary to Masters. Honours and Degree Pass cover both the 2024–2025 and 2013–2014 syllabuses; Masters and Preliminary to Masters are currently available for the 2013–2014 syllabus.','Departments & coverage'],
+    ['Which programs are covered?','BSc, BBA, BSS and BA Honours, the Degree Pass course, Masters, In-Campus Masters, and Preliminary to Masters. Honours and Degree Pass cover both the 2024–2025 and 2013–2014 syllabuses; Masters, In-Campus Masters, and Preliminary to Masters are currently available for the 2013–2014 syllabus.','Departments & coverage'],
     ['What if my department or subject isn\'t listed yet?','Head to the Contact page and tell us what\'s missing — we\'re adding departments regularly and prioritise based on what students ask for.','Departments & coverage'],
     ['Can I calculate my CGPA across all four years at once?','Yes — enter grades year by year and Gradzz rolls them up into one running CGPA automatically, no manual re-adding required.','Departments & coverage'],
     ['Does this save my progress?','Yes, for as long as your browser tab stays open — everything saves automatically as you go, no account or sign-up needed. Just note it clears when you close the tab, so download your result before you leave.','Data & privacy'],
@@ -3711,6 +3757,160 @@
     });
 
     setCfMode('contact');
+  })();
+</script>
+
+<script>
+  // ===== Generic custom-select enhancer =====
+  // Wraps a native <select> with a themed trigger + animated menu, while
+  // keeping the original <select> in the DOM (visually hidden) so every
+  // existing onchange="..." handler, recalc(), saveGrades(), etc. keeps
+  // working exactly as before — we just proxy clicks into it and fire a
+  // real 'change' event.
+  (function(){
+    const map = new WeakMap();
+
+    function build(select){
+      if(select.__cselDone) { refresh(select); return; }
+      select.__cselDone = true;
+
+      const isGrade = select.classList.contains('grade-select');
+      const wrap = document.createElement('span');
+      wrap.className = 'csel-wrap';
+      select.parentNode.insertBefore(wrap, select);
+      wrap.appendChild(select);
+      select.classList.add('csel-native-hidden');
+      select.setAttribute('tabindex','-1');
+      select.setAttribute('aria-hidden','true');
+
+      const trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.className = 'csel-trigger ' + (isGrade ? 'csel-trigger-grade' : 'csel-trigger-form');
+      trigger.innerHTML =
+        '<span class="csel-label"></span>' +
+        '<span class="csel-chev"><svg width="12" height="8" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+      wrap.appendChild(trigger);
+
+      const menu = document.createElement('div');
+      menu.className = 'csel-menu';
+      document.body.appendChild(menu); // escape any overflow:hidden/auto ancestors (e.g. .table-scroll)
+
+      const rec = { trigger, menu, label: trigger.querySelector('.csel-label') };
+      map.set(select, rec);
+
+      function place(){
+        const r = trigger.getBoundingClientRect();
+        menu.style.left = Math.max(8, r.left) + 'px';
+        menu.style.top = (r.bottom + 6) + 'px';
+        menu.style.minWidth = r.width + 'px';
+        const spaceBelow = window.innerHeight - r.bottom - 12;
+        menu.style.maxHeight = Math.max(120, Math.min(280, spaceBelow)) + 'px';
+      }
+      function closeMenu(){
+        menu.classList.remove('open');
+        trigger.classList.remove('open');
+      }
+      function openMenu(){
+        if(select.disabled) return;
+        document.querySelectorAll('.csel-menu.open').forEach(m => { if(m !== menu) m.classList.remove('open'); });
+        document.querySelectorAll('.csel-trigger.open').forEach(t => { if(t !== trigger) t.classList.remove('open'); });
+        place();
+        menu.classList.add('open');
+        trigger.classList.add('open');
+      }
+      rec.close = closeMenu;
+
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        menu.classList.contains('open') ? closeMenu() : openMenu();
+      });
+      window.addEventListener('scroll', () => { if(menu.classList.contains('open')) closeMenu(); }, true);
+      window.addEventListener('resize', () => { if(menu.classList.contains('open')) place(); });
+      document.addEventListener('click', closeMenu);
+
+      refresh(select);
+    }
+
+    function refresh(select){
+      const rec = map.get(select);
+      if(!rec) return;
+      const { trigger, menu, label } = rec;
+      trigger.classList.toggle('csel-disabled', select.disabled);
+      trigger.disabled = select.disabled;
+
+      menu.innerHTML = '';
+      [...select.options].forEach(opt => {
+        const item = document.createElement('div');
+        item.className = 'csel-opt' + (opt.value === select.value ? ' active' : '') + (opt.disabled ? ' disabled' : '');
+        item.textContent = opt.textContent;
+        item.addEventListener('click', e => {
+          e.stopPropagation();
+          if(opt.disabled) return;
+          select.value = opt.value;
+          refresh(select);
+          rec.close();
+          select.dispatchEvent(new Event('change', { bubbles:true }));
+        });
+        menu.appendChild(item);
+      });
+
+      const cur = select.options[select.selectedIndex];
+      label.textContent = cur ? cur.textContent : '';
+      label.classList.toggle('csel-placeholder', !select.value);
+    }
+
+    window.CustomSelect = { init: build, refresh };
+
+    function initAll(root){
+      (root || document).querySelectorAll('#qsProgram,#qsSession,#qsSubject,#siStudentType,select.grade-select').forEach(build);
+    }
+
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', () => initAll());
+    } else {
+      initAll();
+    }
+
+    // Auto-enhance grade-selects created later (new department/table renders)
+    // and keep triggers in sync when existing selects' options/value/disabled
+    // state change programmatically (qsProgramChange, resetGrades, etc.).
+    const mo = new MutationObserver(muts => {
+      muts.forEach(m => {
+        if(m.target && m.target.tagName === 'SELECT' && map.has(m.target)){
+          refresh(m.target);
+        }
+        if(m.type === 'childList'){
+          m.addedNodes.forEach(node => {
+            if(node.nodeType !== 1) return;
+            if(node.matches && node.matches('select.grade-select')) build(node);
+            if(node.querySelectorAll) node.querySelectorAll('select.grade-select').forEach(build);
+          });
+          m.removedNodes.forEach(node => {
+            if(node.nodeType !== 1) return;
+            const cleanup = s => { if(map.has(s) && !s.isConnected){ map.get(s).menu.remove(); map.delete(s); } };
+            if(node.tagName === 'SELECT') cleanup(node);
+            if(node.querySelectorAll) node.querySelectorAll('select').forEach(cleanup);
+          });
+        }
+      });
+    });
+    mo.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['disabled'] });
+
+    // Value assignments made directly in JS (e.g. qsReset, resetGrades) don't
+    // fire DOM mutations, so refresh those spots explicitly.
+    document.addEventListener('DOMContentLoaded', () => {
+      const origQsReset = window.qsReset;
+      if(typeof origQsReset === 'function'){
+        window.qsReset = function(){ origQsReset(); refresh(document.getElementById('qsProgram')); };
+      }
+      const origResetGrades = window.resetGrades;
+      if(typeof origResetGrades === 'function'){
+        window.resetGrades = function(){
+          origResetGrades();
+          document.querySelectorAll('#subjectPanel select.grade-select').forEach(refresh);
+        };
+      }
+    });
   })();
 </script>
 
