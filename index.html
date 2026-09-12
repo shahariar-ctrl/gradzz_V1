@@ -185,6 +185,7 @@
     body{
       margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
       -webkit-font-smoothing:antialiased;overflow-x:hidden;font-size:15px;
+      overscroll-behavior-x:none;
     }
     a{color:inherit;text-decoration:none;}
     button{font-family:inherit;cursor:pointer;}
@@ -3187,14 +3188,21 @@
 
   /* --- i18n swap with innerHTML support for line breaks --- */
   function showView(id, pushState){
-    document.querySelectorAll('main.wrap > section[id^="view-"]').forEach(sec=>{
-      sec.classList.toggle('hidden', sec.id !== 'view-'+id);
-    });
-    clearGlobalSearch();
-    closeMobileMenu();
-    closeSoonModal();
-    closeStudentInfoModal();
-    window.scrollTo({top:0});
+    const applyView = () => {
+      document.querySelectorAll('main.wrap > section[id^="view-"]').forEach(sec=>{
+        sec.classList.toggle('hidden', sec.id !== 'view-'+id);
+      });
+      clearGlobalSearch();
+      closeMobileMenu();
+      closeSoonModal();
+      closeStudentInfoModal();
+      window.scrollTo({top:0});
+    };
+    if(document.startViewTransition){
+      document.startViewTransition(applyView);
+    } else {
+      applyView();
+    }
     if(pushState !== false){
       history.pushState({view:id}, '', '#'+id);
     }
