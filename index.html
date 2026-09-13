@@ -228,8 +228,9 @@
     nav.main-nav a:hover{color:var(--text);}
     nav.main-nav a:hover::after{right:0;}
     .btn{border:none;border-radius:999px;font-weight:700;padding:11px 22px;font-size:14px;transition:.18s;}
-    .btn-grad{background:var(--grad1);color:#fff;box-shadow:0 4px 22px var(--primary-glow);}
-    .btn-grad:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 30px var(--primary-glow);}
+    .btn-grad{background:var(--grad1);color:#fff;box-shadow:var(--shadow);}
+    .btn-grad:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 4px 14px var(--primary-glow);}
+    .btn-grad:disabled{opacity:1;cursor:wait;transform:none;background:var(--grad1);color:#fff;box-shadow:var(--shadow);}
     .btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--border);}
     .btn-ghost:hover{
       border-color:var(--border-hi);
@@ -433,25 +434,23 @@
     }
     .feat-icon{
       width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-      font-size:20px;margin-bottom:16px;color:#fff;font-weight:700;
+      font-size:20px;margin-bottom:16px;font-weight:700;
+      background:rgba(8,145,178,.12);color:var(--primary);border:1px solid var(--border);
     }
-    .feat-icon.i1{background:var(--grad1);} .feat-icon.i2{background:var(--grad2);} .feat-icon.i3{background:var(--grad3);}
     .feat-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    [data-theme="dark"] .feat-icon{background:var(--bg2);color:var(--primary-light);}
     .feat-card h3{font-family:var(--disp);font-size:16.5px;margin:0 0 8px;}
     .feat-card p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
     .about-subhead{font-family:var(--mono);font-size:11.5px;color:var(--primary);letter-spacing:.08em;margin:36px 0 16px;}
 
     .social-btn{
-      width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;
-      color:#fff;transition:.25s;box-shadow:0 4px 14px var(--primary-glow);
+      width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+      background:rgba(8,145,178,.12);color:var(--primary);transition:.25s;border:1px solid var(--border);
     }
+    [data-theme="dark"] .social-btn{background:var(--bg2);color:var(--primary-light);}
     .social-btn svg{width:21px;height:21px;fill:currentColor;}
     .social-btn.sb-github svg,.social-btn.sb-facebook svg,.social-btn.sb-whatsapp svg{width:26px;height:26px;}
-    .social-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 8px 20px var(--primary-glow);}
-    .social-btn.sb-github{background:var(--grad1);}
-    .social-btn.sb-facebook{background:var(--grad2);}
-    .social-btn.sb-twitter{background:linear-gradient(135deg,#0891B2 0%,#6366F1 100%);}
-    .social-btn.sb-whatsapp{background:linear-gradient(135deg,#06B6D4 0%,#6366F1 100%);}
+    .social-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:var(--shadow);}
 
     /* ===== Contact & Feedback form (themed to match the rest of the site) ===== */
     .cf-card{padding:26px 24px;}
@@ -462,18 +461,19 @@
     @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
     .contact-panel{padding:22px 22px 24px;display:flex;flex-direction:column;}
     .contact-panel-badge{
-      width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-      background:var(--grad1);color:#fff;margin-bottom:14px;
+      width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+      background:rgba(8,145,178,.12);color:var(--primary);margin-bottom:14px;border:1px solid var(--border);
     }
     .contact-panel-badge svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    [data-theme="dark"] .contact-panel-badge{background:var(--bg2);color:var(--primary-light);}
     .contact-panel-heading{font-family:var(--disp);font-size:16.5px;font-weight:700;margin:0 0 6px;}
     .contact-panel-sub{font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 16px;}
     .contact-panel-pill{
       display:inline-flex;align-items:center;gap:8px;align-self:center;
       background:var(--grad1);color:#fff;font-weight:700;font-size:13px;
-      padding:10px 16px;border-radius:999px;box-shadow:0 4px 18px var(--primary-glow);transition:.18s;
+      padding:10px 16px;border-radius:999px;box-shadow:var(--shadow);transition:.18s;
     }
-    .contact-panel-pill:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 24px var(--primary-glow);}
+    .contact-panel-pill:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 4px 14px var(--primary-glow);}
     .contact-panel-pill svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
     .contact-panel-fact{
       display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:12.5px;margin-top:16px;
@@ -597,7 +597,7 @@
 
     .cf-submit-error{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--fail-bg);color:var(--fail-text);border:1px solid rgba(244,63,94,.3);font-weight:650;font-size:12.5px;}
     .cf-submit-error.show{display:block;}
-    .cf-success{display:none;margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--pass-bg);color:var(--pass-text);border:1px solid rgba(16,185,129,.3);font-weight:650;font-size:13.5px;align-items:center;gap:9px;}
+    .cf-success{display:none;margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--card);color:var(--pass-text);border:1.5px solid var(--border);font-weight:650;font-size:13.5px;align-items:center;gap:9px;}
     .cf-success.show{display:flex;}
     .cf-success svg{flex:0 0 auto;}
 
@@ -639,12 +639,11 @@
     }
     .program-card:not(.soon):hover{transform:translateY(-3px);border-color:var(--border-hi);box-shadow:0 10px 22px rgba(15,23,42,.09),0 5px 11px var(--primary-glow);}
     .pc-icon{
-      width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;
-      font-size:21px;margin-bottom:14px;background:var(--bg2);color:#fff;
+      width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+      font-size:21px;margin-bottom:14px;background:rgba(8,145,178,.12);color:var(--primary);border:1px solid var(--border);
     }
     .pc-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-    .program-card.acc-2024 .pc-icon{background:linear-gradient(135deg,rgba(6,182,212,.7),rgba(99,102,241,.7));}
-    .program-card.acc-pass .pc-icon{background:linear-gradient(135deg,rgba(16,185,129,.7),rgba(6,182,212,.7));}
+    [data-theme="dark"] .pc-icon{background:var(--bg2);color:var(--primary-light);}
     .pc-tag{font-family:var(--mono);font-size:11.55px;color:var(--primary);letter-spacing:.05em;margin-bottom:6px;}
     .program-card h3{font-family:var(--disp);font-size:19.8px;margin:0 0 6px;}
     .program-card p{font-size:12.5px;color:var(--muted);line-height:1.6;margin:0 0 14px;}
@@ -867,7 +866,7 @@
       font-family:var(--mono);font-size:13.5px;font-weight:700;padding:9px 16px;border-radius:999px;
       border:1px solid var(--border);background:var(--surface);color:var(--muted);
     }
-    .year-pill.active{background:var(--grad1);color:#fff;border-color:transparent;}
+    .year-pill.active{background:var(--grad1);color:#fff;border-color:transparent;box-shadow:0 4px 14px var(--primary-glow);}
     @media (max-width:767px){
       .year-pills{flex-wrap:wrap;gap:6px;--pc:4;}
       .year-pill{
@@ -1377,6 +1376,10 @@
 
       <div class="glass cf-card">
       <form id="cfForm">
+        <div style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+          <label for="cfWebsite">Website</label>
+          <input type="text" id="cfWebsite" name="cfWebsite" tabindex="-1" autocomplete="off">
+        </div>
         <div class="cf-toggle" role="tablist">
           <button type="button" class="cf-toggle-btn active" id="cfTabContact" role="tab" aria-selected="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v14H5.2L4 19.5V4Z"/><path d="M8 9h8M8 12.5h5"/></svg>
@@ -3537,7 +3540,7 @@
     // Put your Google Apps Script Web App URL (connected to your Google
     // Sheet) here after deploying it. Left blank for now — submissions
     // will show a friendly error until this is filled in.
-    const CF_SHEET_ENDPOINT = ''; // (here put the link of google spreadsheet)
+    const CF_SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz6lTSnJXPuGOC3ZKWBCr_OZwaGY7xoPcvUMgohg17j7SD6PcQ-dhIT9b6Mpck9QZDmjw/exec'; // (here put the link of google spreadsheet)
 
     const typeInput = document.getElementById('cfType');
     const topicTrigger = document.getElementById('cfTopicTrigger');
@@ -3559,6 +3562,9 @@
     const defaultRatingText = ratingText.textContent;
 
     if(!form) return;
+
+    const cfFormLoadedAt = Date.now();
+    const honeypot = document.getElementById('cfWebsite');
 
     const tabContact = document.getElementById('cfTabContact');
     const tabRate = document.getElementById('cfTabRate');
@@ -3713,6 +3719,20 @@
     form.addEventListener('submit', async e => {
       e.preventDefault();
       submitError.classList.remove('show');
+
+      // Bot check 1: honeypot field should always be empty for real users.
+      if(honeypot && honeypot.value){
+        return;
+      }
+
+      // Bot check 2: real users take at least a few seconds to fill this out.
+      // Rather than blocking a genuinely fast submitter outright, just wait
+      // out the remaining time before actually sending.
+      const elapsed = Date.now() - cfFormLoadedAt;
+      const minFillTime = 3500;
+      if(elapsed < minFillTime){
+        await new Promise(resolve => setTimeout(resolve, minFillTime - elapsed));
+      }
 
       let data;
 
