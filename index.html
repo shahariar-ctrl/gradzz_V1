@@ -595,9 +595,24 @@
     .cf-lock-hint{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);}
     .cf-lock-hint svg{flex:0 0 auto;color:var(--primary);}
 
-    .cf-submit-error{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--fail-bg);color:var(--fail-text);border:1px solid rgba(244,63,94,.3);font-weight:650;font-size:12.5px;}
-    .cf-submit-error.show{display:block;}
-    .cf-success{display:none;margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--card);color:var(--pass-text);border:1.5px solid var(--border);font-weight:650;font-size:13.5px;align-items:center;gap:9px;}
+    /* ============================================================
+       SUBMIT FEEDBACK BANNERS
+       • .cf-success       → green (#00A67E) + ✓ checkmark
+       • .cf-submit-error  → red (#E53935) + ⚠ warning triangle
+       Both use inline SVG icons so they stay crisp on every DPI.
+       ============================================================ */
+    .cf-submit-error{
+      display:none;margin-top:14px;padding:12px 14px;border-radius:12px;
+      background:rgba(229,57,53,.10);color:#E53935;border:1px solid rgba(229,57,53,.30);
+      font-weight:650;font-size:12.5px;align-items:center;gap:9px;line-height:1.45;
+    }
+    .cf-submit-error.show{display:flex;}
+    .cf-submit-error svg{flex:0 0 auto;}
+    .cf-success{
+      display:none;margin-top:18px;padding:14px 16px;border-radius:12px;
+      background:rgba(0,166,126,.10);color:#00A67E;border:1.5px solid rgba(0,166,126,.30);
+      font-weight:650;font-size:13.5px;align-items:center;gap:9px;line-height:1.45;
+    }
     .cf-success.show{display:flex;}
     .cf-success svg{flex:0 0 auto;}
 
@@ -1492,10 +1507,17 @@
             <span id="cfSubmitLabel">Send Message</span>
           </button>
         </div>
-        <div class="cf-submit-error" id="cfSubmitError">Something went wrong sending this — please try again in a moment.</div>
+
+        <!-- ===== Submit feedback banners =====
+             Error  → red  (#E53935) + ⚠ warning triangle
+             Success→ green(#00A67E) + ✓ checkmark (text swapped per tab) -->
+        <div class="cf-submit-error" id="cfSubmitError">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17.2v.1"/></svg>
+          <span>Something went wrong. Please try again.</span>
+        </div>
         <div class="cf-success" id="cfSuccess">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          Thanks — your feedback has been submitted.
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <span id="cfSuccessText">Thank you for reaching out. Your message has been submitted successfully.</span>
         </div>
       </form>
       </div>
@@ -3559,6 +3581,7 @@
     const reviewFields = document.getElementById('cfReviewFields');
     const form = document.getElementById('cfForm');
     const success = document.getElementById('cfSuccess');
+    const successText = document.getElementById('cfSuccessText');
     const defaultRatingText = ratingText.textContent;
 
     if(!form) return;
@@ -3584,6 +3607,11 @@
     function setCfMode(next){
       if(next === cfMode || cfSwitching) return;
       cfSwitching = true;
+
+      // A stale banner from the other tab makes no sense once the user
+      // switches context — clear both before the panel cross-fade.
+      success.classList.remove('show');
+      submitError.classList.remove('show');
 
       cfMode = next;
       const isContact = cfMode === 'contact';
@@ -3778,6 +3806,10 @@
           throw new Error('Sheet endpoint not configured yet.');
         }
         await sendToSheet(data);
+        // Swap in the wording that matches whichever tab was submitted.
+        successText.textContent = cfMode === 'contact'
+          ? 'Thank you for reaching out. Your message has been submitted successfully.'
+          : 'Thank you for your feedback. Your rating has been submitted successfully.';
         success.classList.add('show');
         success.scrollIntoView({behavior:'smooth', block:'nearest'});
         form.reset();
