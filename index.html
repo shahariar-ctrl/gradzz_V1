@@ -50,7 +50,8 @@
       --shadow:0 8px 30px rgba(15,23,42,.06);
       --card: #F8FAFC;
       --header-bg:rgba(232,236,242,.8);
-      --overlay-bg:rgba(232,236,242,.55);
+      --overlay-bg:rgba(15,23,42,.4);
+      --mobile-backdrop-bg:rgba(232,236,242,.23);
       --dot-grid: rgba(15,23,42,.10);
     }
     /* ============================================================
@@ -69,12 +70,13 @@
       --shadow:0 12px 40px rgba(0,0,0,.7);
       --card:rgba(16,22,34,.75);
       --header-bg:rgba(6,8,14,.82);
-      --overlay-bg:rgba(6,8,14,.68);
       --grad1:linear-gradient(135deg,#06B6D4 0%,#818CF8 100%);
       --grad2:linear-gradient(135deg,#22D3EE 0%,#818CF8 100%);
       --grad3:linear-gradient(135deg,#34D399 0%,#22D3EE 100%);
       --primary-glow:rgba(6,182,212,.3);
       --dot-grid:rgba(255,255,255,.07);
+      --overlay-bg:rgba(0,0,0,.55);
+      --mobile-backdrop-bg:rgba(6,8,14,.29);
     }
 
     /* ---- DOT-MATRIX BACKGROUND (from AI Studio) ---- */
@@ -264,8 +266,6 @@
       .mobile-actions .icon-btn,.theme-toggle{width:34px;height:34px;}
     }
 
-
-
     /* ---- hamburger ⇄ close morph ---- */
     .menu-burger{position:relative;width:18px;height:13px;display:inline-block;flex-shrink:0;}
     .menu-burger span{
@@ -286,25 +286,18 @@
       pointer-events:none;
     }
     .mobile-menu-overlay.open{pointer-events:auto;}
-    /* backdrop spans the FULL width and slides in lockstep with the panel.
-       Its own width (100vw) is greater than the panel's (75vw), so to travel
-       at the SAME px/s speed as the panel it needs a longer duration:
-       .36s * (100/75) = .48s — same easing, same start moment, matched speed. */
     .mobile-menu-backdrop{
       position:absolute;inset:0;width:100%;height:100%;
-      /* 30% then a further 40% more transparent than --overlay-bg (alpha x.7 x.6), blur carries the rest */
-      background:rgba(232,236,242,.23);cursor:pointer;
+      background:var(--mobile-backdrop-bg);cursor:pointer;
       backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
       transform:translateX(100%);
       transition:transform .48s cubic-bezier(.4,0,.2,1);
     }
-    [data-theme="dark"] .mobile-menu-backdrop{background:rgba(6,8,14,.29);}
     .mobile-menu-overlay.open .mobile-menu-backdrop{transform:translateX(0);}
     .mobile-menu-panel{
       position:absolute;top:0;right:0;
       width:75%;max-width:75%;height:100%;
       display:flex;flex-direction:column;gap:26px;
-      /* 30% more transparent than --surface-hi (alpha x.7), blur carries the rest */
       background:rgba(248,250,252,.67);
       backdrop-filter:blur(12px) saturate(180%);-webkit-backdrop-filter:blur(12px) saturate(180%);
       border-left:1px solid var(--border);box-shadow:-12px 0 40px rgba(15,23,42,.10);
@@ -392,7 +385,7 @@
       .hero-cta{font-size:12.6px;padding:9.9px 19.8px;}
     }
     h1.hero-title .g{background:var(--grad1);-webkit-background-clip:text;background-clip:text;color:transparent;}
-    p.hero-sub{font-size:clamp(9px,3.3vw,13px);color:var(--muted);max-width:520px;margin:0 auto 28px;line-height:1.6;}
+    p.hero-sub{font-size:clamp(12px,3.3vw,13px);color:var(--muted);max-width:520px;margin:0 auto 28px;line-height:1.6;}
     .hero-sub-line{white-space:normal;display:inline;}
     .hero-sub-line + .hero-sub-line{margin-left:.3em;}
     .hero-cta{display:inline-flex;}
@@ -439,6 +432,25 @@
     }
     .feat-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
     [data-theme="dark"] .feat-icon{background:var(--bg2);color:var(--primary-light);}
+    /* Per-card accent colours for the .i1/.i2/.i3 icon bubbles. */
+    .feat-card.acc-i1 .feat-icon{background:rgba(8,145,178,.12);color:var(--primary);border-color:rgba(6,182,212,.22);}
+    .feat-card.acc-i2 .feat-icon{background:rgba(99,102,241,.12);color:var(--accent-indigo);border-color:rgba(99,102,241,.22);}
+    .feat-card.acc-i3 .feat-icon{background:rgba(16,185,129,.12);color:var(--accent-emerald);border-color:rgba(16,185,129,.22);}
+    [data-theme="dark"] .feat-card.acc-i1 .feat-icon{background:rgba(6,182,212,.16);color:var(--primary-neon);border-color:rgba(34,211,238,.28);}
+    [data-theme="dark"] .feat-card.acc-i2 .feat-icon{background:rgba(99,102,241,.16);color:#A5B4FC;border-color:rgba(129,140,248,.28);}
+    [data-theme="dark"] .feat-card.acc-i3 .feat-icon{background:rgba(16,185,129,.16);color:#6EE7B7;border-color:rgba(52,211,153,.28);}
+    /* Step-number badges for the "how it works" cards — the plain-text
+       1 / 2 / 3 divs get the display font at heavy weight so they read as
+       deliberate step indicators, matching the card-heading typography
+       instead of the body font they were inheriting. */
+    .feat-icon.feat-step{
+      font-family: var(--disp);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -.03em;
+      line-height: 1;
+      padding-bottom: 1px; /* optical centring of the digit inside the badge */
+    }
     .feat-card h3{font-family:var(--disp);font-size:16.5px;margin:0 0 8px;}
     .feat-card p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
     .about-subhead{font-family:var(--mono);font-size:11.5px;color:var(--primary);letter-spacing:.08em;margin:36px 0 16px;}
@@ -488,10 +500,11 @@
     .contact-panel-social .social-btn.sb-facebook svg,
     .contact-panel-social .social-btn.sb-whatsapp svg{width:21px;height:21px;}
     .cf-toggle{display:flex;gap:4px;padding:4px;background:var(--bg2);border:1px solid var(--border);border-radius:999px;margin-bottom:22px;}
-    .cf-toggle-btn{flex:1;border:0;background:transparent;font:inherit;font-size:13.5px;font-weight:700;color:var(--muted);padding:10px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .18s ease,color .18s ease,box-shadow .18s ease;}
+    .cf-toggle-btn{flex:1;border:0;background:transparent;font:inherit;font-size:13.5px;font-weight:700;color:var(--muted);padding:10px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .18s ease,color .18s ease,box-shadow .18s ease,opacity .18s ease;}
     .cf-toggle-btn svg{flex:0 0 auto;}
     .cf-toggle-btn.active{background:var(--card);color:var(--primary);box-shadow:0 4px 14px var(--primary-glow);}
     .cf-toggle-btn:not(.active):hover{color:var(--text);}
+    .cf-toggle-btn:disabled{opacity:.5;cursor:not-allowed;pointer-events:none;}
     .cf-panel{display:none;opacity:0;transform:translateY(8px);transition:opacity .28s cubic-bezier(.4,0,.2,1),transform .28s cubic-bezier(.4,0,.2,1);}
     .cf-panel.show{display:block;}
     .cf-panel.show.cf-panel-in{opacity:1;transform:translateY(0);}
@@ -538,7 +551,6 @@
     .csel-opt.active{color:var(--primary);}
     .csel-opt.disabled{opacity:.45;cursor:not-allowed;}
 
-    /* Trigger skin matching .qs-field / .si-field selects */
     .csel-trigger-form{
       padding:11px 14px;border-radius:12px;border:1px solid var(--border);
       background-color:var(--card);font-size:13px;font-weight:500;
@@ -546,7 +558,6 @@
     .csel-trigger-form:focus,.csel-trigger-form.open{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow);}
     .csel-trigger-form.csel-disabled{background-color:var(--bg2);color:var(--dim);}
 
-    /* Trigger skin matching select.grade-select */
     .csel-trigger-grade{
       padding:9px 10px;border-radius:10px;border:1px solid var(--border);
       background:var(--card);font-family:var(--mono);font-size:14px;font-weight:700;
@@ -571,7 +582,6 @@
     .cf-field input::placeholder,.cf-field textarea::placeholder{color:var(--dim);}
     .cf-field input:focus,.cf-field textarea:focus{border-color:var(--primary);background:var(--card);box-shadow:0 0 0 3px var(--primary-glow);}
     .cf-hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5;}
-    .cf-conditional{display:none;}
 
     .cf-rating-block{display:none;margin-top:18px;background:var(--primary-glow);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;text-align:center;}
     .cf-rating-block.show{display:block;}
@@ -597,9 +607,6 @@
 
     /* ============================================================
        SUBMIT FEEDBACK BANNERS
-       • .cf-success       → green (#00A67E) + ✓ checkmark
-       • .cf-submit-error  → red (#E53935) + ⚠ warning triangle
-       Both use inline SVG icons so they stay crisp on every DPI.
        ============================================================ */
     .cf-submit-error{
       display:none;margin-top:14px;padding:12px 14px;border-radius:12px;
@@ -652,6 +659,7 @@
       border:1px solid var(--border);background:var(--card);
       transition:.2s ease;position:relative;width:100%;box-shadow:0 2px 10px rgba(15,23,42,.04);
     }
+    .program-card[role="button"]{cursor:pointer;}
     .program-card:not(.soon):hover{transform:translateY(-3px);border-color:var(--border-hi);box-shadow:0 10px 22px rgba(15,23,42,.09),0 5px 11px var(--primary-glow);}
     .pc-icon{
       width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
@@ -720,7 +728,7 @@
     @media (prefers-reduced-motion:reduce){.prog-pill,.pill-dot,.sub-spark{animation:none !important;}}
 
     .modal-overlay{
-      position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.4);
+      position:fixed;inset:0;z-index:200;background:var(--overlay-bg);
       backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
       display:flex;align-items:center;justify-content:center;padding:20px;
       opacity:0;pointer-events:none;transition:.2s ease;
@@ -789,8 +797,8 @@
     .si-field.readonly input{background:var(--bg2);color:var(--muted);}
     .si-field.highlight input{background:rgba(245,158,11,.12);color:var(--accent-amber);font-weight:700;border-color:rgba(245,158,11,.3);}
     .si-field.field-error input{border-color:#ef4444 !important;box-shadow:0 0 0 3px rgba(239,68,68,.15) !important;}
-    .si-field-msg{color:#ef4444;font-size:12px;margin-top:4px;display:none;}
-    .si-field.field-error .si-field-msg{display:block;}
+    .si-field-msg{color:var(--dim);font-size:11px;margin-top:4px;display:block;line-height:1.4;transition:color .18s ease,font-weight .18s ease;}
+    .si-field.field-error .si-field-msg{color:#ef4444;font-weight:600;}
     @media (min-width:560px){.si-grid{grid-template-columns:1fr 1fr;}}
     .modal-footer{padding:18px 24px 22px;border-top:1px solid var(--border);flex-shrink:0;}
     .modal-footer .btn{width:100%;}
@@ -858,7 +866,7 @@
     .rp-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;padding:0 4px;}
     .rp-stat:not(:last-child)::after{content:"";position:absolute;right:0;top:8%;height:84%;width:1px;background:var(--border);}
     .rp-stat-n{font-family:var(--disp);font-size:17px;font-weight:800;letter-spacing:-.01em;}
-    .rp-stat-l{font-family:var(--mono);font-size:8px;color:var(--dim);letter-spacing:.08em;}
+    .rp-stat-l{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.08em;}
 
     .rp-export{
       margin-top:22px;width:100%;display:flex;align-items:center;justify-content:center;gap:9px;
@@ -899,12 +907,6 @@
     .sc-head-title{display:flex;align-items:flex-start;gap:8px;min-width:0;overflow:visible;text-overflow:clip;white-space:normal;word-break:break-word;line-height:1.3;}
     .sc-head .reset-btn{flex-shrink:0;}
 
-    /* ============================================================
-       SEMESTER BLOCKS — used for the Computer Science (CSE) Honours
-       input page, where each academic year is split into two
-       semester tables (1st+2nd, 3rd+4th, 5th+6th, 7th+8th).
-       Purely a display layer on top of the existing marksheet table.
-       ============================================================ */
     .semester-block + .semester-block{border-top:1px solid var(--border);}
     .semester-head{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -1028,6 +1030,7 @@
       tr.total td[colspan]::before{content:'GPA ';font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--dim);text-transform:uppercase;}
     }
 
+    /* Fallback arrow if CustomSelect enhancer fails to load. */
     select.grade-select{
       background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);
       font-family:var(--mono);font-size:14px;font-weight:700;padding:9px 22px 9px 10px;appearance:none;cursor:pointer;
@@ -1122,7 +1125,7 @@
 <header class="site">
   <div class="site-inner">
     <div class="logo" onclick="showView('home')">
-      <span class="dot"></span> <span class="brand-text">Gradzz</span><span class="logo-dots"><span class="accent">.</span><span class="accent2">.</span></span>
+      <span class="dot"></span> <span class="brand-text">Gradzz</span><span><span class="accent">.</span><span class="accent2">.</span></span>
     </div>
     <nav class="main-nav">
       <a href="#" onclick="showView('home');return false;">Home</a>
@@ -1287,17 +1290,17 @@
     <h3 class="about-subhead">// how it works</h3>
     <div class="feat-grid">
       <div class="glass feat-card acc-i1">
-          <div class="feat-icon i1">1</div>
+          <div class="feat-icon i1 feat-step">1</div>
         <h3>Pick your department</h3>
         <p>Choose your program, session and subject from the quick search or the department grid.</p>
       </div>
       <div class="glass feat-card acc-i2">
-          <div class="feat-icon i2">2</div>
+          <div class="feat-icon i2 feat-step">2</div>
         <h3>Enter your grades</h3>
         <p>Type in the letter grade for each course — everything saves automatically as you go.</p>
       </div>
       <div class="glass feat-card acc-i3">
-          <div class="feat-icon i3">3</div>
+          <div class="feat-icon i3 feat-step">3</div>
         <h3>Get your CGPA instantly</h3>
         <p>See your year-by-year GPA and running CGPA update live, no calculator or spreadsheet needed.</p>
       </div>
@@ -1407,7 +1410,7 @@
         </div>
 
         <div class="cf-panel show" id="cfPanelContact">
-          <div class="cf-section-label">What's this about?</div>
+          <div class="cf-section-label">What's this about? <span class="cf-req">*</span></div>
           <div class="cf-topic-field">
             <input type="hidden" id="cfType" value="">
             <button type="button" class="cf-topic-trigger" id="cfTopicTrigger" aria-haspopup="listbox" aria-expanded="false">
@@ -1448,7 +1451,7 @@
             <div class="cf-field"><label for="cfEmail">Email Address</label><input id="cfEmail" type="email" placeholder="you@example.com" required></div>
             <div class="cf-field cf-full"><label for="cfSubject">Subject</label><input id="cfSubject" type="text" placeholder="What is this about?" required></div>
             <div class="cf-field cf-full"><label for="cfMessage">Message</label><textarea id="cfMessage" placeholder="Tell us more — the more detail, the more it helps us improve." required></textarea></div>
-            <div class="cf-field cf-full cf-conditional" id="cfBugFields">
+            <div class="cf-field cf-full" id="cfBugFields" style="display:none;">
               <label for="cfPage">Page / Feature</label>
               <input id="cfPage" type="text" placeholder="e.g. Honours department page, Result download">
               <div class="cf-hint">Helps us find and fix it faster.</div>
@@ -1508,16 +1511,13 @@
           </button>
         </div>
 
-        <!-- ===== Submit feedback banners =====
-             Error  → red  (#E53935) + ⚠ warning triangle
-             Success→ green(#00A67E) + ✓ checkmark (text swapped per tab) -->
         <div class="cf-submit-error" id="cfSubmitError">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17.2v.1"/></svg>
           <span>Something went wrong. Please try again.</span>
         </div>
         <div class="cf-success" id="cfSuccess">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-          <span id="cfSuccessText">Thank you for reaching out. Your message has been submitted successfully.</span>
+          <span id="cfSuccessText">Thanks — your message is on its way. We usually reply within 2–3 days. If you don't hear back, email hello@gradzz.app directly.</span>
         </div>
       </form>
       </div>
@@ -1635,7 +1635,7 @@
         <h2 class="prog-heading" id="deptListTitle">
           <span id="deptListTitleText">Bachelor Degree Honours Program</span>
         </h2>
-        <span class="prog-pill pill-2024" id="deptListPill"><i class="pill-dot"></i>2024–2025 Session</span>
+        <span class="prog-pill ac-2024" id="deptListPill"><i class="pill-dot"></i>2024–2025 Session</span>
       </div>
       <div class="dl-underline"></div>
       <p class="dept-sub">
@@ -1762,9 +1762,9 @@
       <div class="si-section-label">📋 Student Information</div>
       <div class="si-grid">
         <div class="si-field"><label>Student Name</label><input type="text" id="siStudentName" placeholder="Enter full name" oninput="this.value=this.value.replace(/[^A-Za-z\s.'-]/g,'')"></div>
-        <div class="si-field" id="siRollWrap"><label>Examination Roll</label><input type="text" id="siRoll" inputmode="numeric" placeholder="e.g., 1234567" maxlength="7" oninput="this.value=this.value.replace(/[^0-9]/g,'');clearFieldError('siRollWrap')"><div class="si-field-msg">Max 7 digits</div></div>
-        <div class="si-field" id="siRegNoWrap"><label>Registration No</label><input type="text" id="siRegNo" inputmode="numeric" placeholder="e.g., 12345678901" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'');clearFieldError('siRegNoWrap')"><div class="si-field-msg">Max 11 digits</div></div>
-        <div class="si-field" id="siYearWrap"><label>Examination Year</label><input type="text" id="siYear" inputmode="numeric" placeholder="e.g., 2024" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');clearFieldError('siYearWrap')"><div class="si-field-msg">Max 4 digits</div></div>
+        <div class="si-field" id="siRollWrap"><label>Examination Roll</label><input type="text" id="siRoll" inputmode="numeric" placeholder="e.g., 1234567" maxlength="7" oninput="this.value=this.value.replace(/[^0-9]/g,'');clearFieldError('siRollWrap')" onblur="validateNumericField('siRoll',7,'siRollWrap')"><div class="si-field-msg">Max 7 digits</div></div>
+        <div class="si-field" id="siRegNoWrap"><label>Registration No</label><input type="text" id="siRegNo" inputmode="numeric" placeholder="e.g., 12345678901" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'');clearFieldError('siRegNoWrap')" onblur="validateNumericField('siRegNo',11,'siRegNoWrap')"><div class="si-field-msg">Max 11 digits</div></div>
+        <div class="si-field" id="siYearWrap"><label>Examination Year</label><input type="text" id="siYear" inputmode="numeric" placeholder="e.g., 2024" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');clearFieldError('siYearWrap')" onblur="validateNumericField('siYear',4,'siYearWrap')"><div class="si-field-msg">Max 4 digits</div></div>
         <div class="si-field"><label>Session</label><input type="text" id="siSession" inputmode="numeric" placeholder="e.g., 2021-22" oninput="this.value=this.value.replace(/[^0-9-]/g,'')"></div>
         <div class="si-field">
           <label>Student Type</label>
@@ -1787,7 +1787,7 @@
 <footer class="site">
   <div class="wrap footer-grid">
     <div class="foot-brand">
-      <div class="logo" onclick="showView('home')"><span class="dot"></span><span class="brand-text">Gradzz</span><span class="logo-dots"><span class="accent">.</span><span class="accent2">.</span></span></div>
+      <div class="logo" onclick="showView('home')"><span class="dot"></span><span class="brand-text">Gradzz</span><span><span class="accent">.</span><span class="accent2">.</span></span></div>
       <p>Grade-weighted. Auto-saved. The CGPA calculator National University students actually deserved.</p>
     </div>
     <div class="foot-links-row">
@@ -1822,7 +1822,7 @@
      RESULT SHEET v2 — "luxury" design, ported from the provided
      result-sheet template. Everything is prefixed "rs2-" and scoped
      under #grdSheetHost so it can never collide with the app's own
-     styles (e.g. its own .code / .title / .credit table classes).
+     styles.
   ============================================================ */
   #grdSheetHost{
     --rs2-bg-canvas:#f6f8fb; --rs2-surface:#ffffff; --rs2-surface-subtle:#f8fafc; --rs2-surface-muted:#f1f5f9;
@@ -1832,7 +1832,7 @@
     --rs2-accent-champagne:#b48c48; --rs2-accent-champagne-light:#fdfbf7; --rs2-accent-champagne-border:#e9dec9;
     --rs2-accent-rose:#e11d48; --rs2-accent-rose-soft:#fff1f2; --rs2-accent-rose-border:rgba(225,29,72,.25);
     --rs2-radius-md:10px; --rs2-radius-sm:6px;
-    font-family:'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-family:'Plus Jakarta Sans','Inter','Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   }
   #grdSheetHost .rs2-doc *{ box-sizing:border-box; margin:0; padding:0; }
   #grdSheetHost .rs2-doc{
@@ -1919,7 +1919,6 @@
   #grdSheetHost table.rs2-course-table tfoot td{ background:var(--rs2-accent-champagne-light); border-top:2px solid var(--rs2-accent-champagne-border); border-bottom:none; padding:7.5px 10px; font-size:11.5px; font-weight:700; color:var(--rs2-ink-primary); }
   #grdSheetHost table.rs2-course-table tfoot .rs2-total-title{ text-align:center; padding-right:14px; text-transform:uppercase; letter-spacing:.05em; font-size:10px; color:var(--rs2-accent-champagne); }
   #grdSheetHost table.rs2-course-table tfoot .rs2-gpa-val{ color:var(--rs2-accent-brand); font-weight:800; }
-  /* Semester sub-groups inside a single-year course table (Download Result) */
   #grdSheetHost table.rs2-course-table tr.rs2-sem-head-row td{
     background:var(--rs2-accent-sage-soft); color:var(--rs2-accent-sage); font-size:10px; font-weight:800; text-transform:uppercase;
     letter-spacing:.06em; padding:6px 10px; border-bottom:1px solid rgba(13,148,136,.2); border-right:none; text-align:center;
@@ -1937,7 +1936,6 @@
   #grdSheetHost .rs2-auth-stamp svg{ flex-shrink:0; margin-top:1px; }
   #grdSheetHost .rs2-sub-label{ font-size:8px; font-weight:600; text-transform:none; letter-spacing:0; color:var(--rs2-ink-faint); }
 
-  /* ---- Consolidated multi-year Transcript table (Download Full Transcript) ---- */
   #grdSheetHost table.rs2-transcript-table{ width:100%; border-collapse:collapse; text-align:center; }
   #grdSheetHost table.rs2-transcript-table thead tr.rs2-section-row th{
     background:var(--rs2-accent-brand); color:#fff; font-size:12px; font-weight:700; letter-spacing:.02em; text-align:center;
@@ -1968,7 +1966,6 @@
     padding:7.5px 4px; font-size:11px; font-weight:800; color:var(--rs2-accent-brand); border-right:1.5px solid var(--rs2-accent-champagne-border);
   }
   #grdSheetHost table.rs2-transcript-table tfoot td:last-child{ border-right:none; }
-  /* Semester sub-groups inside the multi-year Transcript table */
   #grdSheetHost table.rs2-transcript-table tr.rs2-sem-head-row td{
     background:var(--rs2-accent-sage-soft); color:var(--rs2-accent-sage); font-size:10px; font-weight:800; text-transform:uppercase;
     letter-spacing:.06em; padding:6px 8px; border-bottom:1px solid rgba(13,148,136,.2); border-right:none; text-align:center;
@@ -1982,11 +1979,6 @@
 <script>
   const { jsPDF } = window.jspdf || {};
 
-  /* ============================================================
-     HEADER HEIGHT SYNC — header is position:fixed (out of flow),
-     so main's top padding must track its real rendered height
-     (which changes across breakpoints, theme, and font load).
-     ============================================================ */
   (function(){
     const header = document.querySelector('header.site');
     if(!header) return;
@@ -2000,11 +1992,6 @@
     if(window.ResizeObserver) new ResizeObserver(syncHeaderHeight).observe(header);
   })();
 
-  /* ============================================================
-     LENIS — smooth scrolling
-     (guarded: if the CDN script fails to load/blocked, fall back to
-     native scrolling instead of throwing and killing the whole app)
-     ============================================================ */
   let lenis = null;
   if (typeof Lenis !== 'undefined') {
     try {
@@ -2024,17 +2011,28 @@
   } else {
     console.warn('Lenis library did not load — using native scroll.');
   }
-  // Safe no-op stand-ins so every later lenis.stop()/lenis.start() call
-  // still works even when Lenis never initialized.
   if (!lenis) {
     lenis = { stop(){}, start(){}, raf(){} };
   }
 
-  /* ============================================================
-     THEME ENGINE — auto-follow OS preference with manual override
-     ============================================================ */
+  function scrollToTop(immediate){
+    if(lenis && typeof lenis.scrollTo === 'function'){
+      lenis.scrollTo(0, { immediate: !!immediate });
+    } else {
+      window.scrollTo({ top: 0, behavior: immediate ? 'auto' : 'smooth' });
+    }
+  }
+  function scrollToSection(el){
+    if(!el) return;
+    const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 64;
+    if(lenis && typeof lenis.scrollTo === 'function'){
+      lenis.scrollTo(el, { offset: -headerH - 8 });
+    } else {
+      const top = el.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }
 
-  // Apply theme by setting or removing the data-theme attribute
   function applyTheme(theme) {
     const html = document.documentElement;
     if (theme === 'dark') {
@@ -2042,31 +2040,25 @@
     } else {
       html.removeAttribute('data-theme');
     }
-    // Keep the mobile browser chrome in step with the app's own theme.
-    // (The static <meta name="theme-color"> is only the pre-JS default.)
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', theme === 'dark' ? '#06080E' : '#0891B2');
   }
 
-  // Get the current effective theme ('dark' or 'light')
   function getCurrentTheme() {
     const html = document.documentElement;
     return html.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
   }
 
-  // Initialize theme: use saved preference, or fallback to system preference
   function initTheme() {
     const saved = localStorage.getItem('gradzz-theme');
     if (saved === 'dark' || saved === 'light') {
       applyTheme(saved);
     } else {
-      // No saved preference — follow system
       const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       applyTheme(systemDark ? 'dark' : 'light');
     }
   }
 
-  // Toggle between light and dark, save preference
   function toggleTheme() {
     const current = getCurrentTheme();
     const next = current === 'dark' ? 'light' : 'dark';
@@ -2076,8 +2068,6 @@
     };
 
     if (!document.startViewTransition) {
-      // Fallback for browsers without the View Transitions API: use the
-      // .legacy-theme-fade class (defined in CSS) to cross-fade colors.
       const html = document.documentElement;
       html.classList.add('legacy-theme-fade');
       applyAndSave();
@@ -2093,20 +2083,16 @@
     document.startViewTransition(applyAndSave);
   }
 
-  // Listen for system theme changes — only if user hasn't manually overridden
   const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
   systemThemeMedia.addEventListener('change', function(e) {
     const saved = localStorage.getItem('gradzz-theme');
-    // Only auto-switch if user has never manually set a preference
     if (!saved) {
       applyTheme(e.matches ? 'dark' : 'light');
     }
   });
 
-  // Run theme init as soon as possible
   initTheme();
 
-  // Keep the footer copyright year current without a hardcoded date.
   (function(){
     const el = document.getElementById('footYear');
     if(el) el.textContent = new Date().getFullYear();
@@ -2125,14 +2111,7 @@
     {g:'D',  pt:2.00, range:'40% to 44%',  rangeIncampus:'50% to 54%'},
     {g:'F',  pt:0.00, range:'Below 40%',   rangeIncampus:'Below 50%'},
   ];
-  // In-Campus Masters uses National University's own marks-range scale
-  // (e.g. 90 and Above for A+) instead of the standard one shown for
-  // every other program — grade points are identical either way.
   function gradeRangeFor(g){ return activeSyllabus === 'incampus2013' ? g.rangeIncampus : g.range; }
-  // In-Campus Masters's official formula treats an 'F' grade's credits as
-  // never earned, so they drop out of the GPA/CGPA denominator entirely;
-  // every other program keeps an F course's credit in the denominator
-  // (contributing 0 grade points, which still drags the average down).
   function creditCountsForEarned(grade){
     return !(activeSyllabus === 'incampus2013' && grade.g === 'F');
   }
@@ -2196,7 +2175,6 @@
     'prelim2024':2, 'prelim2013':2,
   };
 
-  // Header wording used on the printable Result Sheet, per program type.
   const PROGRAM_HEADER_PREFIX = {
     '2024':'Bachelor Degree (Honours)', '2013':'Bachelor Degree (Honours)',
     'pass2024':'Bachelor Degree (Pass)', 'pass2013':'Bachelor Degree (Pass)',
@@ -2204,26 +2182,13 @@
     'incampus2013':"Master's (In-Campus)",
     'prelim2024':"Preliminary to Master's", 'prelim2013':"Preliminary to Master's",
   };
-  // Masters programs that run as a single, final-only result (no per-unit
-  // breakdown) — everything else (including In-Campus Masters, which runs
-  // across 3 semesters) uses the normal multi-unit flow below.
   const MASTERS_KEYS = ['masters2024','masters2013'];
-
-  // Semester breakdown (SEMESTER_GROUPS_BY_YEAR) only applies to the CSE
-  // department under the Honours syllabus — Degree Pass CSE runs as plain
-  // yearly units with no semesters, same as every other Degree Pass dept.
   const HONOURS_KEYS = ['2024','2013'];
-
-  // Some programs count their academic units in "Semester" rather than
-  // "Year" (currently just In-Campus Masters, which runs 3 semesters).
-  // Everything else defaults to "Year".
   const PROGRAM_UNIT_WORD = { 'incampus2013':'Semester' };
   function unitWord(key){ return PROGRAM_UNIT_WORD[key] || 'Year'; }
   const UNIT_ORDINAL_WORD = {1:'First', 2:'Second', 3:'Third', 4:'Fourth'};
   function unitFullLabel(key, n){ return `${UNIT_ORDINAL_WORD[n] || n+'th'} ${unitWord(key)}`; }
 
-  // Builds the shared "Gradzz_<Program>[_<Nth>_Year]" prefix used for downloaded
-  // PDF file names, e.g. "Gradzz_Honours_1st_Year" or "Gradzz_Masters_Final".
   function pdfFileNamePrefix(includeYear){
     const prog = PROGRAMS.find(p=>p.key===activeSyllabus);
     const isMasters = MASTERS_KEYS.includes(activeSyllabus);
@@ -2235,9 +2200,6 @@
     return `Gradzz_${progLabel}${yearPart}`;
   }
 
-  // Appends "_<roll>" and/or "_<reg>" only when the student actually entered
-  // them, so a blank field doesn't leave placeholder text like "_Roll_Reg"
-  // in the downloaded file name.
   function pdfIdSuffix(roll, reg){
     const parts = [];
     if(roll) parts.push(roll);
@@ -2245,13 +2207,11 @@
     return parts.length ? `_${parts.join('_')}` : '';
   }
 
-  // Builds the exam header line, e.g. "Bachelor Degree (Honours) 1st Year Examination — 2020"
-  // or, for transcripts / Masters (single-year programs), "Master's Final Examination — 2020".
-  function buildExamHeaderLine(mode, examYearOverride){
+  function buildExamHeaderLine(mode, examYear){
     const prog = PROGRAMS.find(p=>p.key===activeSyllabus);
     const totalYears = PROGRAM_YEARS[activeSyllabus] || 1;
     const progPrefix = PROGRAM_HEADER_PREFIX[activeSyllabus] || (prog ? prog.title : 'Examination');
-    const examYear = examYearOverride || (document.getElementById('siYear').value || '').trim() || '—';
+    const year = examYear || '—';
     const isMasters = MASTERS_KEYS.includes(activeSyllabus);
     let middle;
     if(isMasters){
@@ -2262,32 +2222,17 @@
       const yearOrdinal = totalYears > 1 ? (YEAR_NUM_LABEL[currentYear] || currentYear+'th') + ' ' + unitWord(activeSyllabus) + ' ' : '';
       middle = `${yearOrdinal}Examination`;
     }
-    return `${progPrefix} ${middle} — ${examYear}`;
+    return `${progPrefix} ${middle} — ${year}`;
   }
 
-  /* ============================================================
-     SUBJECT DATA
-     ------------------------------------------------------------
-     Each entry in SUBJECTS_BY_YEAR is a *flat* list of every course
-     belonging to that academic year. The list is a single source of
-     truth shared by the input page, the year GPA maths and both
-     PDF generators — nothing else needs to change when subjects
-     are added or edited here.
-
-     For the Honours CSE page the flat year list is additionally
-     split for display into two semester tables using
-     SEMESTER_GROUPS_BY_YEAR below (see renderYear()).
-     ============================================================ */
   const SUBJECTS_BY_YEAR = {
     1: [
-      /* ---- 1st Semester (16.5 credits) ---- */
       {code:'510201', name:'Computer Fundamentals',              credit:3.0},
       {code:'510203', name:'Structured Programming Language',     credit:3.0},
       {code:'510204', name:'Computer Programming Lab I',          credit:1.5},
       {code:'510205', name:'Physics',                            credit:3.0},
       {code:'510207', name:'Calculus',                           credit:3.0},
       {code:'510209', name:'English',                            credit:3.0},
-      /* ---- 2nd Semester (18.0 credits) ---- */
       {code:'510211', name:'Discrete Mathematics',                credit:3.0},
       {code:'510213', name:'Digital Systems Design',              credit:3.0},
       {code:'510215', name:'Electrical & Electronic Circuit',     credit:3.0},
@@ -2296,23 +2241,11 @@
       {code:'510220', name:'Digital Systems and VHDL Lab',        credit:1.5},
       {code:'510222', name:'Electrical & Electronic Circuit Lab', credit:1.5},
     ],
-    // Years 2, 3 and 4 will be filled in with the real per-department
-    // subject lists once the syllabus data is ready. Left as empty
-    // arrays for now so the year pills, semester structure and totals
-    // still render correctly — each page simply shows an empty course
-    // list with 0 credits / 0.00 GPA until populated.
     2: [],
     3: [],
     4: [],
   };
 
-  /* ============================================================
-     SEMESTER GROUPS — display-only split of each year's flat
-     subject list into its two semesters (start/end are inclusive
-     indexes into SUBJECTS_BY_YEAR[year]). Used exclusively by the
-     Honours CSE input page; every other department keeps the
-     original single-table-per-year layout.
-     ============================================================ */
   const SEMESTER_GROUPS_BY_YEAR = {
     1: [
       {label:'1st Semester', start:0, end:5},
@@ -2332,13 +2265,9 @@
     ],
   };
 
-  // Which departments are rendered with the two-semester-per-year layout.
   function isSemesterDept(){ return currentDept === 'Computer Science' && HONOURS_KEYS.includes(activeSyllabus); }
   function semesterGroupsFor(year){
     if(!isSemesterDept()) return null;
-    // Don't split an empty year into semester tables — there's nothing
-    // to show inside them, and the "1st/2nd Semester" headers would be
-    // misleading. Fall back to a single (empty) table instead.
     const subs = SUBJECTS_BY_YEAR[year];
     if(!subs || subs.length === 0) return null;
     return SEMESTER_GROUPS_BY_YEAR[year] || null;
@@ -2370,13 +2299,15 @@
 
   function renderPrograms(){
     document.getElementById('programGrid').innerHTML = PROGRAMS.filter(p=>p.active).map(p=>`
-      <button class="glass program-card ${accentClassFor(p.key)}" onclick="openProgram('${p.key}')">
+      <article class="glass program-card ${accentClassFor(p.key)}" role="button" tabindex="0"
+        onclick="openProgram('${p.key}')"
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProgram('${p.key}');}">
         <div class="pc-icon">${p.icon}</div>
         <div class="pc-tag">${p.tag}</div>
         <h3>${p.title} Program</h3>
         <p>${p.desc}</p>
         <span class="pc-arrow">Browse →</span>
-      </button>`).join('');
+      </article>`).join('');
   }
 
   const SESSION_LABELS = {'2024':'2024–2025 Session','2013':'2013–2014 Session','pass2024':'2024–2025 Session','pass2013':'2013–2014 Session','masters2024':'2024–2025 Session','masters2013':'2013–2014 Session','incampus2013':'2013–2014 Session','prelim2024':'2024–2025 Session','prelim2013':'2013–2014 Session'};
@@ -2416,7 +2347,6 @@
     updateDeptHeading(prog, key);
     renderDeptGroups();
     renderGradingScale();
-    renderClassScale();
     showView('deptlist');
   }
 
@@ -2462,6 +2392,7 @@
       return;
     }
     const opts = PROGRAM_GROUPS[prog] || [];
+    // Safety net for future programs whose syllabus data isn't published yet.
     if(!opts.length){
       sessionSel.innerHTML = '<option value="">Coming soon</option>';
       sessionSel.disabled = true;
@@ -2604,6 +2535,24 @@
     lenis.start();
   }
 
+  function validateNumericField(id, max, wrapId){
+    const el = document.getElementById(id);
+    const wrap = document.getElementById(wrapId);
+    if(!el || !wrap) return true;
+    const tooLong = el.value.length > max;
+    wrap.classList.toggle('field-error', tooLong);
+    return !tooLong;
+  }
+  function clearFieldError(wrapId){
+    document.getElementById(wrapId).classList.remove('field-error');
+  }
+  function validateStudentInfoFields(){
+    const ok1 = validateNumericField('siRoll', 7, 'siRollWrap');
+    const ok2 = validateNumericField('siRegNo', 11, 'siRegNoWrap');
+    const ok3 = validateNumericField('siYear', 4, 'siYearWrap');
+    return ok1 && ok2 && ok3;
+  }
+
   let siMode = 'year';
   function openStudentInfoModal(mode){
     siMode = mode;
@@ -2614,9 +2563,6 @@
     document.getElementById('siSubject').value = `${deptCodeNum(currentDept)} - ${currentDept}`;
     document.getElementById('siResult').value = 'In Progress';
 
-    // In-Campus Masters is always run through National University itself,
-    // so the "College Name" field becomes a locked "Institution" field
-    // instead of asking the student to type one in.
     const isIncampus = activeSyllabus === 'incampus2013';
     const collegeWrap = document.getElementById('siCollegeWrap');
     const collegeLabel = document.getElementById('siCollegeLabel');
@@ -2633,18 +2579,14 @@
       collegeWrap.classList.remove('readonly');
     }
     if(mode==='transcript'){
-      // Full transcript: show the overall CGPA across every year (Masters
-      // included — it's a single-year program, but still labeled CGPA).
       document.getElementById('siCgpaLabel').textContent = 'CGPA';
       document.getElementById('siCgpa').value = document.getElementById('sealCgpa').textContent;
     } else {
-      // Single year result: show only that year's GPA, not the cumulative
-      // CGPA — except for Masters, which only has one year, so its result
-      // sheet is labeled CGPA too instead of "GPA (First Year)".
       const isMastersMode = MASTERS_KEYS.includes(activeSyllabus);
       document.getElementById('siCgpaLabel').textContent = isMastersMode ? 'CGPA' : ('GPA (' + unitFullLabel(activeSyllabus, currentYear) + ')');
       document.getElementById('siCgpa').value = yearStats(currentDept, currentYear).gpa.toFixed(2);
     }
+    ['siRollWrap','siRegNoWrap','siYearWrap'].forEach(clearFieldError);
     document.getElementById('studentInfoOverlay').classList.add('open');
     document.body.style.overflow='hidden';
     lenis.stop();
@@ -2654,10 +2596,10 @@
     document.body.style.overflow='';
     lenis.start();
   }
-  function clearFieldError(wrapId){
-    document.getElementById(wrapId).classList.remove('field-error');
-  }
   function downloadTranscript(){
+    if(!validateStudentInfoFields()){
+      return;
+    }
     if(siMode === 'transcript'){
       generateTranscriptPDF();
       closeStudentInfoModal();
@@ -2668,8 +2610,6 @@
     closeStudentInfoModal();
   }
 
-  // Builds the official-style Result Sheet markup (matching the National University layout),
-  // rasterizes it with html2canvas, and saves it as a PDF via jsPDF.
   async function generateResultSheetPDF(){
     if(!jsPDF || !window.html2canvas){ alert('PDF library failed to load. Please check your internet connection and try again.'); return; }
 
@@ -2682,9 +2622,6 @@
     const session = get('siSession') || '—';
     const studentType = get('siStudentType') || '—';
     const examYear = get('siYear') || '—';
-    // In-Campus Masters runs directly through National University, so its
-    // "College Name" row becomes two half-width cells — Institution and
-    // Program Type — instead of one free-text college name.
     const isIncampus = activeSyllabus === 'incampus2013';
     const collegeRowHTML = isIncampus
       ? `<div class="rs2-record-item"><div class="rs2-field-label">Institution</div><div class="rs2-field-value">National University</div></div><div class="rs2-record-item"><div class="rs2-field-label">Program Type</div><div class="rs2-field-value">On-Campus</div></div>`
@@ -2695,9 +2632,6 @@
     const yearOrdinal = totalYears > 1 ? (YEAR_NUM_LABEL[currentYear] || currentYear+'th') + ' ' + unitWord(activeSyllabus) + ' ' : '';
     const headerLine = buildExamHeaderLine('year', examYear);
     const sectionTitle = `${prog ? displayProgramTitle(prog.title) : ''} ${yearOrdinal}Course wise Grade`.trim();
-    // Masters is a single-year program, so its result sheet's overall
-    // grade field is labeled CGPA (it's the whole program's result),
-    // unlike Honours/Degree Pass where each year's sheet shows GPA.
     const isMastersProg = MASTERS_KEYS.includes(activeSyllabus);
     const gpaFieldLabel = isMastersProg ? 'CGPA' : 'GPA';
 
@@ -2706,9 +2640,6 @@
     try{ vals = JSON.parse(sessionStorage.getItem(gradeStorageKey(currentDept, currentYear))) || {}; }catch(e){ vals = {}; }
 
     let creditsEarned = 0, points = 0, gradedCount = 0, hasFail = false;
-    // buildSubjectRow() updates the running year-wide totals above as a
-    // side effect (called exactly once per subject, whether the table
-    // ends up flat or split into semester blocks below).
     function buildSubjectRow(s, i){
       const gCode = vals[i];
       const grade = GRADES.find(g=>g.g===gCode);
@@ -2730,10 +2661,6 @@
       };
     }
 
-    // Computer Science (Honours) → split this year's courses into its two
-    // semester tables (same grouping used on-screen in renderYear()), each
-    // with its own semester subtotal row. Any other department → the
-    // original flat course list.
     const resultSemGroups = semesterGroupsFor(currentYear);
     let courseRows;
     if(resultSemGroups){
@@ -2870,32 +2797,13 @@
     saveCanvasAsA4Pdf(canvas, `${pdfFileNamePrefix(true)}_Result${pdfIdSuffix(rollNo, regNo)}.pdf`);
   }
 
-  // Builds the official-style, multi-year consolidated Transcript markup
-  // (matching the luxury result-sheet template), rasterizes it with
-  // html2canvas, and saves it as a PDF via jsPDF — same pipeline as
-  // generateResultSheetPDF() so both downloads share one visual language.
-  // Places a rasterized result/transcript canvas onto a single true-A4
-  // page (with a consistent 0.5in margin) and saves the result as a PDF.
-  // The canvas is always scaled down to fit within one page — never
-  // sliced across multiple pages — so the document is guaranteed to be
-  // exactly one page long regardless of how much content it has.
-  // Because the file is a genuine A4 document, printing it "fit to page"
-  // on any other paper size scales the whole sheet uniformly; the ratio
-  // is never stretched.
   function saveCanvasAsA4Pdf(canvas, filename){
     const A4_W_IN = 8.27, A4_H_IN = 11.69, MARGIN_IN = 0.5;
-    const contentWidthIn = A4_W_IN - MARGIN_IN * 2;   // 7.27in
-    const contentHeightIn = A4_H_IN - MARGIN_IN * 2;  // 10.69in
+    const contentWidthIn = A4_W_IN - MARGIN_IN * 2;
+    const contentHeightIn = A4_H_IN - MARGIN_IN * 2;
 
     const pdf = new jsPDF({ unit:'in', format:[A4_W_IN, A4_H_IN], orientation:'portrait' });
 
-    // Always fit the whole document onto a single A4 page: scale the
-    // rasterized canvas down (preserving its aspect ratio) so both its
-    // width and height fit inside the printable area, instead of
-    // slicing it across multiple pages. Whichever dimension is the
-    // tighter constraint determines the scale; the other dimension is
-    // then centered within its remaining margin so the sheet stays
-    // visually balanced no matter how tall the content is.
     const canvasAspect = canvas.width / canvas.height;
     let drawWidthIn = contentWidthIn;
     let drawHeightIn = drawWidthIn / canvasAspect;
@@ -2924,9 +2832,6 @@
     const session = get('siSession') || '—';
     const studentType = get('siStudentType') || '—';
     const examYear = get('siYear') || '—';
-    // In-Campus Masters runs directly through National University, so its
-    // "College Name" row becomes two half-width cells — Institution and
-    // Program Type — instead of one free-text college name.
     const isIncampus = activeSyllabus === 'incampus2013';
     const collegeRowHTML = isIncampus
       ? `<div class="rs2-record-item"><div class="rs2-field-label">Institution</div><div class="rs2-field-value">National University</div></div><div class="rs2-record-item"><div class="rs2-field-label">Program Type</div><div class="rs2-field-value">On-Campus</div></div>`
@@ -2935,16 +2840,9 @@
     const prog = PROGRAMS.find(p=>p.key===activeSyllabus);
     const totalYears = PROGRAM_YEARS[activeSyllabus] || 1;
     const headerLine = buildExamHeaderLine('transcript', examYear);
-    // Masters is a single-year program, so its transcript uses the same
-    // 4-column (Code / Title / Credit / Letter Grade) layout — and matching
-    // "Course wise Grade" heading — as the per-year result sheet, instead
-    // of the multi-year Code(credit)/LG grid + "Course wise Letter Grade"
-    // heading used for Honours/Degree Pass programs.
     const isMasters = MASTERS_KEYS.includes(activeSyllabus);
     const sectionTitle = `${prog ? displayProgramTitle(prog.title) : ''} Course wise ${isMasters ? 'Grade' : 'Letter Grade'}`.trim();
 
-    // Gather every year's subjects + saved grades, and roll them up into
-    // one cumulative CGPA — same math as updateSummaryCard()/yearStats().
     const yearsData = [];
     let totalEarnedPoints = 0, totalCreditsAll = 0, totalPossibleCredits = 0;
     let allGraded = true, hasFailAny = false;
@@ -2986,12 +2884,6 @@
     const subjectLine = `(${deptCodeNum(currentDept)} - ${currentDept.toUpperCase()})`;
     const todayStr = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
 
-    // Masters (single-year) transcripts render a plain 4-column table —
-    // Code / Title of Course / Credit / Letter Grade — identical to the
-    // per-year result sheet, since there's only ever one "year" of data.
-    // Honours/Degree Pass (multi-year) transcripts keep the consolidated
-    // grid: one Code(credit)+LG column pair per year, rows padded to the
-    // tallest year so everything lines up.
     let tableMarkup;
     if(isMasters){
       const mRows = yearsData[0] ? yearsData[0].rows : [];
@@ -3025,10 +2917,6 @@
             </tfoot>
           </table>`;
     } else {
-      // Same 17%:8% (code:LG) ratio as the original template, scaled so each
-      // year's pair of columns still divides the full table width evenly —
-      // this is what actually sets column widths (auto table layout reads
-      // the widths from these header cells), not a 50/50 split.
       const pairWidthPct = 100 / yearsData.length;
       const codeWidthPct = +(pairWidthPct * 0.80).toFixed(2);
       const lgWidthPct = +(pairWidthPct * 0.20).toFixed(2);
@@ -3037,11 +2925,6 @@
       const subColRowHTML = yearsData.map((yd, idx)=>`<th style="width:${codeWidthPct}%;">Course Code(credit)</th><th style="width:${lgWidthPct}%;"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>LG</th>`).join('');
       const footRowHTML = yearsData.map((yd, idx)=>`<td colspan="2"${idx===yearsData.length-1?'':' class="rs2-year-sep"'}>GPA: ${yd.gpa.toFixed(2)}</td>`).join('');
 
-      // Computer Science (Honours) → keep the Year 1/2/3/4 columns
-      // side-by-side, but split every year's rows into a "Semester 1"
-      // row-block followed by a "Semester 2" row-block underneath it
-      // (each year's own semester ranges, via semesterGroupsFor()),
-      // instead of one flat list of that year's courses.
       const yearSemGroups = yearsData.map(yd => semesterGroupsFor(yd.yr));
       const useSemesterSplit = yearSemGroups.every(g => g);
 
@@ -3196,22 +3079,37 @@
       const cat = f[2] || '';
       const heading = (cat && cat !== lastCat) ? `<div class="faq-cat">${cat}</div>` : '';
       lastCat = cat;
+      // Accordion: only the question row (and the +/- icon inside it)
+      // controls open/close. Clicking the answer body does nothing.
       return `${heading}
-      <div class="faq-item glass" style="margin-bottom:10px;padding:0 18px;" onclick="openFaq(${i})" id="faq-${i}">
-        <button class="faq-q">${f[0]}<span class="plus" onclick="closeFaqIcon(event,${i})">+</span></button>
+      <div class="faq-item glass" style="margin-bottom:10px;padding:0 18px;" id="faq-${i}">
+        <button type="button" class="faq-q" onclick="toggleFaq(${i})">${f[0]}<span class="plus" onclick="closeFaqIcon(event,${i})">+</span></button>
         <div class="faq-a"><p>${f[1]}</p></div>
       </div>`;
     }).join('');
   }
-  function openFaq(i){ document.getElementById('faq-'+i).classList.add('open'); }
+
+  /* Accordion mode: opening one FAQ closes every other.
+     Re-clicking the currently-open item closes it (with nothing left open). */
+  function toggleFaq(i){
+    const el = document.getElementById('faq-'+i);
+    const willOpen = !el.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
+    if(willOpen) el.classList.add('open');
+  }
   function closeFaqIcon(e,i){
     e.stopPropagation();
-    const el = document.getElementById('faq-'+i);
-    el.classList.contains('open') ? el.classList.remove('open') : el.classList.add('open');
+    toggleFaq(i);
+  }
+  function closeAllFaqs(){
+    document.querySelectorAll('.faq-item.open').forEach(el=>el.classList.remove('open'));
   }
 
-  /* --- i18n swap with innerHTML support for line breaks --- */
-  function showView(id, pushState){
+  let currentView = 'home';
+  function showView(id, pushState, skipScroll){
+    if(currentView === 'faq' && id !== 'faq') closeAllFaqs();
+    currentView = id;
+
     document.querySelectorAll('main.wrap > section[id^="view-"]').forEach(sec=>{
       sec.classList.toggle('hidden', sec.id !== 'view-'+id);
     });
@@ -3219,29 +3117,61 @@
     closeMobileMenu();
     closeSoonModal();
     closeStudentInfoModal();
-    window.scrollTo({top:0});
+    if(!skipScroll) scrollToTop(true);
     if(pushState !== false){
-      history.pushState({view:id}, '', '#'+id);
+      history.pushState({
+        view: id,
+        syllabus: activeSyllabus,
+        dept: currentDept,
+        year: currentYear
+      }, '', '#'+id);
     }
   }
 
-  // Make browser/device back button step through in-app views one at a time,
-  // like a normal multi-page site, instead of leaving the app immediately.
-  history.replaceState({view:'home'}, '', '#home');
+  history.replaceState({
+    view: 'home',
+    syllabus: activeSyllabus,
+    dept: currentDept,
+    year: currentYear
+  }, '', '#home');
   window.addEventListener('popstate', function(e){
-    const id = (e.state && e.state.view) ? e.state.view : 'home';
+    const s = e.state || { view: 'home' };
+    const id = s.view || 'home';
+
+    if(s.syllabus) activeSyllabus = s.syllabus;
+    if(s.dept) currentDept = s.dept;
+    if(s.year) currentYear = s.year;
+
+    if(id === 'deptlist'){
+      const prog = PROGRAMS.find(p=>p.key===activeSyllabus);
+      updateDeptHeading(prog, activeSyllabus);
+      renderDeptGroups();
+      renderGradingScale();
+      renderClassScale();
+    }
+    if(id === 'grading'){
+      const prog = PROGRAMS.find(p=>p.key===activeSyllabus);
+      document.getElementById('gradingDeptTitle').innerHTML = `Department of ${currentDept}<br><span style="font-size:0.8em;">${prog?displayProgramTitle(prog.title):''} | (${prog?SESSION_SHORT[prog.key]:''})</span>`;
+      renderYearStatTiles();
+      renderYearPills();
+      renderYear();
+    }
+
     showView(id, false);
   });
 
   function goSection(id){
-    showView('home');
-    const el = document.getElementById(id);
-    if(el) el.scrollIntoView();
+    showView('home', true, true);
+    requestAnimationFrame(()=>{
+      const el = document.getElementById(id);
+      if(el) scrollToSection(el);
+    });
   }
 
   (function(){
     let i18nCurrentLang = 'en';
     let i18nResizeTimer = null;
+    let i18nGlitchTimer = null;
 
     function lockI18nHeights(){
       const hero = document.querySelector('.hero');
@@ -3268,9 +3198,21 @@
       i18nCurrentLang = nextLang;
     }
 
+    function startI18nGlitch(){
+      stopI18nGlitch();
+      i18nGlitchTimer = setInterval(glitchSwap, 10000);
+    }
+    function stopI18nGlitch(){
+      if(i18nGlitchTimer){ clearInterval(i18nGlitchTimer); i18nGlitchTimer = null; }
+    }
+
     window.addEventListener('load', ()=>{
       lockI18nHeights();
-      setInterval(glitchSwap, 10000);
+      if(!document.hidden) startI18nGlitch();
+    });
+    document.addEventListener('visibilitychange', ()=>{
+      if(document.hidden) stopI18nGlitch();
+      else startI18nGlitch();
     });
     window.addEventListener('resize', ()=>{
       clearTimeout(i18nResizeTimer);
@@ -3297,8 +3239,6 @@
     wrap.innerHTML = html;
   }
 
-  // Builds the CGPA-panel stat tiles (one per year, plus Credits) to match
-  // this program's actual year count, instead of always showing 4 years.
   function renderYearStatTiles(){
     const wrap = document.getElementById('rpStats');
     const totalYears = PROGRAM_YEARS[activeSyllabus] || 1;
@@ -3326,18 +3266,6 @@
     renderYear();
   }
 
-  /* ============================================================
-     renderYear() — grade-input panel.
-
-     • Computer Science (Honours) → the year's subjects are split into
-       TWO semester tables (Semester 1 / Semester 2 of that year).
-       Each semester table is a self-contained <table class="marksheet">
-       inside a .semester-block, keeping the existing table styling
-       (code / paper / credit / grade / range columns) intact.
-
-     • Any other department → the original single-table layout, exactly
-       as before.
-     ============================================================ */
   function renderYear(){
     const panel = document.getElementById('subjectPanel');
     const subjects = SUBJECTS_BY_YEAR[currentYear] || [];
@@ -3350,9 +3278,6 @@
       </div>`;
 
     if(groups){
-      /* ---------- Two semester tables for CSE, each with its own
-         summary row (matching every other department's per-year total),
-         plus a final year-total row (no header bar) after both semesters. ---------- */
       const blocks = groups.map((grp,gi)=>{
         const rows = [];
         let semCredits = 0;
@@ -3399,7 +3324,6 @@
 
       panel.innerHTML = headHTML + blocks + yearTotalBlock;
     } else {
-      /* ---------- Original single-table layout ---------- */
       panel.innerHTML = headHTML + `
         <div class="table-scroll">
         <table class="marksheet">
@@ -3501,9 +3425,6 @@
     if(tc) tc.textContent = creditsEarned;
     if(tg) tg.textContent = gpa.toFixed(2);
 
-    // Per-semester summary rows (CSE only — each semester-block that
-    // carries data-sem-index gets its own earned-credits/GPA total,
-    // same formula as the year total above, scoped to that block's selects).
     document.querySelectorAll('#subjectPanel .semester-block[data-sem-index]').forEach(block=>{
       const idx = block.dataset.semIndex;
       let semCreditsEarned=0, semPoints=0;
@@ -3531,6 +3452,9 @@
     document.querySelectorAll('#subjectPanel select.grade-select').forEach(s=>s.value='');
     try{ sessionStorage.removeItem(gradeStorageKey()); }catch(e){}
     recalc();
+    if(window.CustomSelect && window.CustomSelect.refresh){
+      document.querySelectorAll('#subjectPanel select.grade-select').forEach(window.CustomSelect.refresh);
+    }
   }
 
   function renderGradingScale(){
@@ -3559,10 +3483,7 @@
 
   /* ===== Contact & Feedback form ===== */
   (function initContactForm(){
-    // Put your Google Apps Script Web App URL (connected to your Google
-    // Sheet) here after deploying it. Left blank for now — submissions
-    // will show a friendly error until this is filled in.
-    const CF_SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz6lTSnJXPuGOC3ZKWBCr_OZwaGY7xoPcvUMgohg17j7SD6PcQ-dhIT9b6Mpck9QZDmjw/exec'; // (here put the link of google spreadsheet)
+    const CF_SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz6lTSnJXPuGOC3ZKWBCr_OZwaGY7xoPcvUMgohg17j7SD6PcQ-dhIT9b6Mpck9QZDmjw/exec';
 
     const typeInput = document.getElementById('cfType');
     const topicTrigger = document.getElementById('cfTopicTrigger');
@@ -3570,8 +3491,6 @@
     const topicValueText = document.getElementById('cfTopicValueText');
     const topicIcon = document.getElementById('cfTopicIcon');
     const topicOpts = [...document.querySelectorAll('#cfTopicMenu .cf-topic-opt')];
-    // Captured before anything changes them, so we can restore the
-    // dropdown/star widgets to their untouched state after a submit.
     const defaultTopicIconHTML = topicIcon.innerHTML;
     const defaultTopicValueText = topicValueText.textContent;
     const bugFields = document.getElementById('cfBugFields');
@@ -3608,8 +3527,6 @@
       if(next === cfMode || cfSwitching) return;
       cfSwitching = true;
 
-      // A stale banner from the other tab makes no sense once the user
-      // switches context — clear both before the panel cross-fade.
       success.classList.remove('show');
       submitError.classList.remove('show');
 
@@ -3634,21 +3551,17 @@
       const outgoing = isContact ? panelRate : panelContact;
       const incoming = isContact ? panelContact : panelRate;
 
-      // Fade the current panel out first.
       outgoing.classList.remove('cf-panel-in');
 
       setTimeout(() => {
         outgoing.classList.remove('show');
         incoming.classList.add('show');
-        // Force reflow so the browser registers the starting state
-        // before the 'in' class kicks off the transition.
         void incoming.offsetWidth;
         incoming.classList.add('cf-panel-in');
         cfSwitching = false;
       }, 220);
     }
 
-    // Set the initial panel's visible state to match its 'show' class.
     panelContact.classList.add('cf-panel-in');
 
     tabContact.addEventListener('click', () => setCfMode('contact'));
@@ -3677,10 +3590,6 @@
       bugFields.style.display = isBug ? 'block' : 'none';
     }
 
-    // Puts the topic dropdown and star rating back to their untouched,
-    // nothing-selected state. form.reset() only clears the underlying
-    // <input>/<select> values — it doesn't know about these custom
-    // widgets, so this has to be done by hand after a successful submit.
     function resetTopicAndRating(){
       topicOpts.forEach(o => o.classList.remove('active'));
       topicValueText.textContent = defaultTopicValueText;
@@ -3733,13 +3642,10 @@
     });
 
     async function sendToSheet(data){
-      // Apps Script Web Apps don't return usable CORS headers to the
-      // browser, so we send with mode:'no-cors'. We can't read the
-      // response, but the row still gets written on the sheet's side.
       await fetch(CF_SHEET_ENDPOINT, {
         method: 'POST',
         mode: 'no-cors',
-        headers: {'Content-Type': 'text/plain'}, // avoids a CORS preflight
+        headers: {'Content-Type': 'text/plain'},
         body: JSON.stringify(data)
       });
     }
@@ -3748,14 +3654,10 @@
       e.preventDefault();
       submitError.classList.remove('show');
 
-      // Bot check 1: honeypot field should always be empty for real users.
       if(honeypot && honeypot.value){
         return;
       }
 
-      // Bot check 2: real users take at least a few seconds to fill this out.
-      // Rather than blocking a genuinely fast submitter outright, just wait
-      // out the remaining time before actually sending.
       const elapsed = Date.now() - cfFormLoadedAt;
       const minFillTime = 3500;
       if(elapsed < minFillTime){
@@ -3798,6 +3700,9 @@
         };
       }
 
+      const submittingMode = cfMode;
+      tabContact.disabled = true;
+      tabRate.disabled = true;
       submitBtn.disabled = true;
       submitLabel.textContent = 'Sending…';
 
@@ -3806,10 +3711,9 @@
           throw new Error('Sheet endpoint not configured yet.');
         }
         await sendToSheet(data);
-        // Swap in the wording that matches whichever tab was submitted.
-        successText.textContent = cfMode === 'contact'
-          ? 'Thank you for reaching out. Your message has been submitted successfully.'
-          : 'Thank you for your feedback. Your rating has been submitted successfully.';
+        successText.textContent = submittingMode === 'contact'
+          ? "Thanks — your message is on its way. We usually reply within 2–3 days. If you don't hear back, email hello@gradzz.app directly."
+          : "Thanks for the feedback. Every response gets read, and it directly shapes what we build next.";
         success.classList.add('show');
         success.scrollIntoView({behavior:'smooth', block:'nearest'});
         form.reset();
@@ -3818,8 +3722,10 @@
         console.error('Submission failed:', err);
         submitError.classList.add('show');
       } finally {
+        tabContact.disabled = false;
+        tabRate.disabled = false;
         submitBtn.disabled = false;
-        submitLabel.textContent = cfMode === 'contact' ? 'Send Message' : 'Submit Rating';
+        submitLabel.textContent = submittingMode === 'contact' ? 'Send Message' : 'Submit Rating';
       }
     });
 
@@ -3828,14 +3734,25 @@
 </script>
 
 <script>
-  // ===== Generic custom-select enhancer =====
-  // Wraps a native <select> with a themed trigger + animated menu, while
-  // keeping the original <select> in the DOM (visually hidden) so every
-  // existing onchange="..." handler, recalc(), saveGrades(), etc. keeps
-  // working exactly as before — we just proxy clicks into it and fire a
-  // real 'change' event.
   (function(){
-    const map = new WeakMap();
+    const map = new Map();
+
+    function removeMenuFor(select){
+      const rec = map.get(select);
+      if(rec && rec.menu) rec.menu.remove();
+      map.delete(select);
+      if(select) select.__cselDone = false;
+    }
+
+    function sweepDisconnected(){
+      for(const [sel, rec] of map){
+        if(!sel.isConnected){
+          rec.menu.remove();
+          map.delete(sel);
+          sel.__cselDone = false;
+        }
+      }
+    }
 
     function build(select){
       if(select.__cselDone) { refresh(select); return; }
@@ -3860,7 +3777,7 @@
 
       const menu = document.createElement('div');
       menu.className = 'csel-menu';
-      document.body.appendChild(menu); // escape any overflow:hidden/auto ancestors (e.g. .table-scroll)
+      document.body.appendChild(menu);
 
       const rec = { trigger, menu, label: trigger.querySelector('.csel-label') };
       map.set(select, rec);
@@ -3901,7 +3818,7 @@
       menu.addEventListener('touchmove', e => e.stopPropagation());
       window.addEventListener('scroll', e => {
         if(!menu.classList.contains('open')) return;
-        if(menu.contains(e.target)) return; // internal scroll of the menu itself — don't close
+        if(menu.contains(e.target)) return;
         closeMenu();
       }, true);
       window.addEventListener('resize', () => { if(menu.classList.contains('open')) place(); });
@@ -3950,9 +3867,6 @@
       initAll();
     }
 
-    // Auto-enhance grade-selects created later (new department/table renders)
-    // and keep triggers in sync when existing selects' options/value/disabled
-    // state change programmatically (qsProgramChange, resetGrades, etc.).
     const mo = new MutationObserver(muts => {
       muts.forEach(m => {
         if(m.target && m.target.tagName === 'SELECT' && map.has(m.target)){
@@ -3964,18 +3878,12 @@
             if(node.matches && node.matches('select.grade-select')) build(node);
             if(node.querySelectorAll) node.querySelectorAll('select.grade-select').forEach(build);
           });
-          m.removedNodes.forEach(node => {
-            if(node.nodeType !== 1) return;
-            const cleanup = s => { if(map.has(s) && !s.isConnected){ map.get(s).menu.remove(); map.delete(s); } };
-            if(node.tagName === 'SELECT') cleanup(node);
-            if(node.querySelectorAll) node.querySelectorAll('select').forEach(cleanup);
-          });
         }
       });
+      sweepDisconnected();
     });
     mo.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['disabled'] });
 
-    // Header search results: keep scroll contained to the dropdown itself.
     const gsrBox = document.getElementById('globalSearchResults');
     if(gsrBox){
       gsrBox.addEventListener('wheel', e => {
@@ -3987,18 +3895,12 @@
       gsrBox.addEventListener('touchmove', e => e.stopPropagation());
     }
 
-    // Value assignments made directly in JS (e.g. qsReset, resetGrades) don't
-    // fire DOM mutations, so refresh those spots explicitly.
     document.addEventListener('DOMContentLoaded', () => {
       const origQsReset = window.qsReset;
       if(typeof origQsReset === 'function'){
-        window.qsReset = function(){ origQsReset(); refresh(document.getElementById('qsProgram')); };
-      }
-      const origResetGrades = window.resetGrades;
-      if(typeof origResetGrades === 'function'){
-        window.resetGrades = function(){
-          origResetGrades();
-          document.querySelectorAll('#subjectPanel select.grade-select').forEach(refresh);
+        window.qsReset = function(){
+          origQsReset();
+          refresh(document.getElementById('qsProgram'));
         };
       }
     });
